@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory — LUXE Auto Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header id="header" class="header-solid">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">LUXE<span>Auto Gallery</span></a>
+      <nav class="nav-links">
+        <a href="inventory.html" class="active">Inventory</a>
+        <a href="inventory.html?cat=SUV">SUVs</a>
+        <a href="inventory.html?cat=Sport">Sports Cars</a>
+        <a href="inventory.html?cat=Electric">Electric</a>
+        <a href="index.html#about">About</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="tel:+15551234567" class="btn-outline">📞 Call Us</a>
+        <a href="inventory.html" class="btn-primary">Browse Inventory</a>
+      </div>
+      <button class="nav-toggle" id="navToggle">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="inventory.html">Inventory</a>
+      <a href="inventory.html?cat=SUV">SUVs</a>
+      <a href="inventory.html?cat=Sport">Sports Cars</a>
+      <a href="inventory.html?cat=Electric">Electric</a>
+      <a href="index.html#about">About</a>
+      <a href="tel:+15551234567" class="btn-primary">📞 Call Us</a>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> › Inventory</p>
+      <h1>Our Inventory</h1>
+      <p>Certified luxury vehicles, transparently priced.</p>
+    </div>
+  </div>
+
+  <!-- INVENTORY LAYOUT -->
+  <div class="inventory-layout container">
+
+    <!-- FILTERS SIDEBAR -->
+    <aside class="filters" id="filters">
+      <div class="filter-header">
+        <h3>Filter Vehicles</h3>
+        <button class="clear-filters" onclick="clearFilters()">Clear All</button>
+      </div>
+
+      <div class="filter-group">
+        <label>Search</label>
+        <input type="text" id="filterSearch" placeholder="Make, model..." oninput="applyFilters()"/>
+      </div>
+
+      <div class="filter-group">
+        <label>Category</label>
+        <div class="check-list" id="filterCat">
+          <label><input type="checkbox" value="SUV" onchange="applyFilters()"/> SUV</label>
+          <label><input type="checkbox" value="Sedan" onchange="applyFilters()"/> Sedan</label>
+          <label><input type="checkbox" value="Sport" onchange="applyFilters()"/> Sport</label>
+          <label><input type="checkbox" value="Electric" onchange="applyFilters()"/> Electric</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Brand</label>
+        <div class="check-list" id="filterBrand">
+          <label><input type="checkbox" value="Mercedes-Benz" onchange="applyFilters()"/> Mercedes-Benz</label>
+          <label><input type="checkbox" value="BMW" onchange="applyFilters()"/> BMW</label>
+          <label><input type="checkbox" value="Porsche" onchange="applyFilters()"/> Porsche</label>
+          <label><input type="checkbox" value="Audi" onchange="applyFilters()"/> Audi</label>
+          <label><input type="checkbox" value="Land Rover" onchange="applyFilters()"/> Land Rover</label>
+          <label><input type="checkbox" value="Bentley" onchange="applyFilters()"/> Bentley</label>
+          <label><input type="checkbox" value="Tesla" onchange="applyFilters()"/> Tesla</label>
+          <label><input type="checkbox" value="Lamborghini" onchange="applyFilters()"/> Lamborghini</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Max Price: <strong id="priceLabel">$250,000</strong></label>
+        <input type="range" id="filterPrice" min="50000" max="250000" step="5000" value="250000" oninput="updatePrice(this.value); applyFilters()"/>
+      </div>
+
+      <div class="filter-group">
+        <label>Fuel Type</label>
+        <div class="check-list">
+          <label><input type="checkbox" value="Petrol" onchange="applyFilters()"/> Petrol</label>
+          <label><input type="checkbox" value="Electric" onchange="applyFilters()"/> Electric</label>
+          <label><input type="checkbox" value="Hybrid" onchange="applyFilters()"/> Hybrid</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Availability</label>
+        <div class="check-list">
+          <label><input type="checkbox" value="available" id="filterAvail" onchange="applyFilters()"/> Available Only</label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RESULTS -->
+    <main class="inventory-main">
+      <div class="inventory-toolbar">
+        <p id="resultCount">Showing 8 vehicles</p>
+        <div class="sort-row">
+          <label>Sort by:</label>
+          <select id="sortBy" onchange="applyFilters()">
+            <option value="default">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="year-desc">Newest First</option>
+            <option value="mileage-asc">Lowest Mileage</option>
+          </select>
+        </div>
+      </div>
+      <div class="cars-grid" id="inventoryGrid"></div>
+      <div class="no-results hidden" id="noResults">
+        <p>No vehicles match your filters.</p>
+        <button class="btn-primary" onclick="clearFilters()">Clear Filters</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">LUXE<span>Auto Gallery</span></div>
+        <p>Premium certified vehicles.<br/>Exceptional service since 2008.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Inventory</h4>
+        <a href="inventory.html?cat=SUV">SUVs</a>
+        <a href="inventory.html?cat=Sedan">Sedans</a>
+        <a href="inventory.html?cat=Sport">Sports Cars</a>
+        <a href="inventory.html?cat=Electric">Electric</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#about">About Us</a>
+        <a href="#">Finance</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 LUXE Auto Gallery. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    function updatePrice(v) {
+      document.getElementById('priceLabel').textContent = '$' + Number(v).toLocaleString();
+    }
+
+    function getChecked(name) {
+      return [...document.querySelectorAll(`input[type=checkbox][value="${name}"]`)].filter(el => el.checked).map(el => el.value);
+    }
+
+    function getCheckedGroup(selector) {
+      return [...document.querySelectorAll(selector + ' input:checked')].map(el => el.value);
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('filterSearch').value.toLowerCase();
+      const cats = getCheckedGroup('#filterCat');
+      const brands = getCheckedGroup('#filterBrand');
+      const maxPrice = parseInt(document.getElementById('filterPrice').value);
+      const fuels = [...document.querySelectorAll('.filter-group .check-list input[value="Petrol"], .filter-group .check-list input[value="Electric"], .filter-group .check-list input[value="Hybrid"]')].filter(el => el.checked).map(el => el.value);
+      const availOnly = document.getElementById('filterAvail').checked;
+      const sort = document.getElementById('sortBy').value;
+
+      let results = CARS.filter(c => {
+        if (q && !c.name.toLowerCase().includes(q) && !c.brand.toLowerCase().includes(q)) return false;
+        if (cats.length && !cats.includes(c.category)) return false;
+        if (brands.length && !brands.includes(c.brand)) return false;
+        if (c.price > maxPrice) return false;
+        if (fuels.length && !fuels.includes(c.fuel)) return false;
+        if (availOnly && !c.available) return false;
+        return true;
+      });
+
+      if (sort === 'price-asc') results.sort((a,b) => a.price - b.price);
+      else if (sort === 'price-desc') results.sort((a,b) => b.price - a.price);
+      else if (sort === 'year-desc') results.sort((a,b) => b.year - a.year);
+      else if (sort === 'mileage-asc') results.sort((a,b) => a.mileage - b.mileage);
+
+      const grid = document.getElementById('inventoryGrid');
+      const noRes = document.getElementById('noResults');
+      document.getElementById('resultCount').textContent = `Showing ${results.length} vehicle${results.length !== 1 ? 's' : ''}`;
+
+      if (results.length === 0) {
+        grid.innerHTML = '';
+        noRes.classList.remove('hidden');
+      } else {
+        noRes.classList.add('hidden');
+        grid.innerHTML = results.map(carCard).join('');
+      }
+    }
+
+    function clearFilters() {
+      document.querySelectorAll('#filters input[type=checkbox]').forEach(el => el.checked = false);
+      document.getElementById('filterSearch').value = '';
+      document.getElementById('filterPrice').value = 250000;
+      document.getElementById('filterAvail').checked = false;
+      updatePrice(250000);
+      applyFilters();
+    }
+
+    // Init from URL params
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('cat')) {
+      const cb = document.querySelector(`#filterCat input[value="${params.get('cat')}"]`);
+      if (cb) cb.checked = true;
+    }
+    if (params.get('q')) {
+      document.getElementById('filterSearch').value = params.get('q');
+    }
+    if (params.get('price')) {
+      document.getElementById('filterPrice').value = params.get('price');
+      updatePrice(params.get('price'));
+    }
+
+    applyFilters();
+  </script>
+</body>
+</html>

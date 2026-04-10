@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUXE Auto Gallery — Premium Car Dealership</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header id="header">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">LUXE<span>Auto Gallery</span></a>
+      <nav class="nav-links">
+        <a href="inventory.html">Inventory</a>
+        <a href="inventory.html?cat=SUV">SUVs</a>
+        <a href="inventory.html?cat=Sport">Sports Cars</a>
+        <a href="inventory.html?cat=Electric">Electric</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="tel:+15551234567" class="btn-outline">📞 Call Us</a>
+        <a href="inventory.html" class="btn-primary">Browse Inventory</a>
+      </div>
+      <button class="nav-toggle" id="navToggle">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="inventory.html">Inventory</a>
+      <a href="inventory.html?cat=SUV">SUVs</a>
+      <a href="inventory.html?cat=Sport">Sports Cars</a>
+      <a href="inventory.html?cat=Electric">Electric</a>
+      <a href="#about">About</a>
+      <a href="tel:+15551234567" class="btn-primary">📞 Call Us</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1800&q=85&auto=format&fit=crop" alt="Luxury Car"/>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container hero-content">
+      <p class="hero-eyebrow">Premium Certified Dealership · Est. 2008</p>
+      <h1>Find Your<br/>Perfect Drive</h1>
+      <p class="hero-sub">Over 200 certified luxury vehicles. Transparent pricing. White-glove service.</p>
+
+      <!-- SEARCH BAR -->
+      <div class="search-bar">
+        <div class="search-field">
+          <label>Make / Model</label>
+          <input type="text" id="heroSearch" placeholder="e.g. BMW, Mercedes, Porsche..."/>
+        </div>
+        <div class="search-field">
+          <label>Category</label>
+          <select id="heroCat">
+            <option value="">All Categories</option>
+            <option value="SUV">SUV</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Sport">Sport</option>
+            <option value="Electric">Electric</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Max Price</label>
+          <select id="heroPrice">
+            <option value="">Any Price</option>
+            <option value="80000">Under $80,000</option>
+            <option value="120000">Under $120,000</option>
+            <option value="200000">Under $200,000</option>
+          </select>
+        </div>
+        <button class="btn-search" onclick="heroSearch()">Search Cars</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hstat"><strong>200+</strong><span>Vehicles</span></div>
+        <div class="hstat-sep"></div>
+        <div class="hstat"><strong>15+</strong><span>Brands</span></div>
+        <div class="hstat-sep"></div>
+        <div class="hstat"><strong>4.9★</strong><span>Rating</span></div>
+        <div class="hstat-sep"></div>
+        <div class="hstat"><strong>16yr</strong><span>In Business</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section categories">
+    <div class="container">
+      <div class="section-head">
+        <h2>Browse by Category</h2>
+        <a href="inventory.html" class="link-arrow">View All →</a>
+      </div>
+      <div class="cat-grid">
+        <a href="inventory.html?cat=SUV" class="cat-card">
+          <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=600&q=80&auto=format&fit=crop" alt="SUV"/>
+          <div class="cat-info"><h3>SUVs</h3><span>42 vehicles</span></div>
+        </a>
+        <a href="inventory.html?cat=Sedan" class="cat-card">
+          <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=80&auto=format&fit=crop" alt="Sedan"/>
+          <div class="cat-info"><h3>Sedans</h3><span>38 vehicles</span></div>
+        </a>
+        <a href="inventory.html?cat=Sport" class="cat-card">
+          <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80&auto=format&fit=crop" alt="Sport"/>
+          <div class="cat-info"><h3>Sports Cars</h3><span>27 vehicles</span></div>
+        </a>
+        <a href="inventory.html?cat=Electric" class="cat-card">
+          <img src="https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=600&q=80&auto=format&fit=crop" alt="Electric"/>
+          <div class="cat-info"><h3>Electric</h3><span>19 vehicles</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED INVENTORY -->
+  <section class="section featured">
+    <div class="container">
+      <div class="section-head">
+        <h2>Featured Vehicles</h2>
+        <a href="inventory.html" class="link-arrow">View All Inventory →</a>
+      </div>
+      <div class="cars-grid" id="featuredGrid"></div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">✓</div>
+        <div>
+          <h4>Certified Pre-Owned</h4>
+          <p>Every vehicle passes our 150-point inspection</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🛡</div>
+        <div>
+          <h4>2-Year Warranty</h4>
+          <p>Comprehensive coverage on all vehicles</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💳</div>
+        <div>
+          <h4>Flexible Finance</h4>
+          <p>Tailored payment plans from 0% APR</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔄</div>
+        <div>
+          <h4>7-Day Returns</h4>
+          <p>Not satisfied? Return it, no questions asked</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / STORY -->
+  <section class="section about" id="about">
+    <div class="container about-grid">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=900&q=85&auto=format&fit=crop" alt="Showroom"/>
+      </div>
+      <div class="about-text">
+        <span class="tag">About LUXE Auto Gallery</span>
+        <h2>16 Years of Automotive Excellence</h2>
+        <p>Founded in 2008, LUXE Auto Gallery has been the trusted destination for discerning buyers seeking the world's finest automobiles. Our curated inventory, transparent pricing, and white-glove service set us apart.</p>
+        <ul class="about-list">
+          <li>✓ Authorized dealer for 15+ premium brands</li>
+          <li>✓ Over 2,400 satisfied clients</li>
+          <li>✓ Award-winning customer service</li>
+          <li>✓ In-house financing & insurance</li>
+        </ul>
+        <a href="inventory.html" class="btn-primary">Explore Our Inventory</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials">
+    <div class="container">
+      <div class="section-head center">
+        <h2>What Our Clients Say</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"The most seamless car buying experience I've ever had. Found my dream Porsche in 2 days. The team was exceptional."</p>
+          <div class="testi-author"><strong>James Whitfield</strong><span>Purchased: Porsche 911</span></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"LUXE Auto Gallery is in a different league. Transparent pricing, no pressure, and the Range Rover was immaculate."</p>
+          <div class="testi-author"><strong>Sarah Chen</strong><span>Purchased: Range Rover</span></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"I've bought 3 cars from LUXE now. The consistency in quality and service keeps me coming back every time."</p>
+          <div class="testi-author"><strong>Marcus Okafor</strong><span>Purchased: BMW X7</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container cta-inner">
+      <div>
+        <h2>Ready to Find Your Car?</h2>
+        <p>Browse our full inventory of 200+ certified luxury vehicles.</p>
+      </div>
+      <div class="cta-btns">
+        <a href="inventory.html" class="btn-primary">Browse Inventory</a>
+        <a href="tel:+15551234567" class="btn-outline-white">📞 Speak to a Specialist</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">LUXE<span>Auto Gallery</span></div>
+        <p>Premium certified vehicles.<br/>Exceptional service since 2008.</p>
+        <p class="footer-contact">📍 123 Prestige Drive, Beverly Hills, CA<br/>📞 +1 (555) 123-4567<br/>✉ hello@luxeautogallery.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Inventory</h4>
+        <a href="inventory.html?cat=SUV">SUVs</a>
+        <a href="inventory.html?cat=Sedan">Sedans</a>
+        <a href="inventory.html?cat=Sport">Sports Cars</a>
+        <a href="inventory.html?cat=Electric">Electric</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#">Finance</a>
+        <a href="#">Trade-In</a>
+        <a href="#">Test Drive</a>
+        <a href="#">Warranty</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#about">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 LUXE Auto Gallery. All rights reserved.</p>
+      <p>Privacy Policy · Terms of Service</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Render featured cars (first 4 available)
+    const featured = CARS.filter(c => c.available).slice(0, 4);
+    document.getElementById('featuredGrid').innerHTML = featured.map(carCard).join('');
+
+    function heroSearch() {
+      const q = document.getElementById('heroSearch').value;
+      const cat = document.getElementById('heroCat').value;
+      const price = document.getElementById('heroPrice').value;
+      let url = `inventory.html?`;
+      if (q) url += `q=${encodeURIComponent(q)}&`;
+      if (cat) url += `cat=${cat}&`;
+      if (price) url += `price=${price}&`;
+      window.location.href = url;
+    }
+
+    document.getElementById('heroSearch').addEventListener('keydown', e => {
+      if (e.key === 'Enter') heroSearch();
+    });
+  </script>
+</body>
+</html>
