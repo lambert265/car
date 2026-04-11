@@ -9,11 +9,12 @@ import CompareBar from "@/components/CompareBar";
 import { WishlistProvider } from "@/lib/wishlist";
 import { CompareProvider } from "@/lib/compare";
 import { AuthProvider } from "@/lib/auth.tsx";
+import { CartProvider } from "@/lib/cart";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "VANTA Motors — Premium Automotive",
+  title: "LUXE Motors — Premium Automotive",
   description: "Over 200 certified luxury vehicles. Transparent pricing. White-glove service since 2008.",
 };
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${dmSans.variable} font-sans`} suppressHydrationWarning>
         <AuthProvider>
+        <CartProvider>
         <WishlistProvider>
           <CompareProvider>
             <Navbar />
@@ -34,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CompareBar />
           </CompareProvider>
         </WishlistProvider>
+        </CartProvider>
         </AuthProvider>
       </body>
     </html>

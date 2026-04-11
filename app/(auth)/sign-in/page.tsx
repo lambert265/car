@@ -6,6 +6,9 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight, AlertCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
+// Admin credentials - store these in environment variables in production
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "admin@luxemotors.com";
+
 export default function SignInPage() {
   const router = useRouter();
   const [email,    setEmail]    = useState("");
@@ -18,9 +21,21 @@ export default function SignInPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) { setError(error.message); setLoading(false); return; }
-    router.push("/admin/dashboard");
+    
+    const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    
+    if (signInError) { 
+      setError(signInError.message); 
+      setLoading(false); 
+      return; 
+    }
+
+    // Check if user is admin and redirect accordingly
+    if (data.user?.email === ADMIN_EMAIL) {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/account");
+    }
   }
 
   return (
@@ -32,14 +47,14 @@ export default function SignInPage() {
 
           {/* Logo */}
           <Link href="/" className="flex flex-col leading-none mb-12">
-            <span className="font-black text-white text-[22px] tracking-[0.22em] uppercase">VANTA</span>
+            <span className="font-black text-white text-[22px] tracking-[0.22em] uppercase">LUXE</span>
             <span className="text-[#C9A84C] text-[8px] tracking-[0.6em] uppercase font-bold">Motors</span>
           </Link>
 
           <div className="mb-8">
             <div className="h-px w-8 bg-[#C9A84C] mb-4" />
             <h1 className="text-white font-bold text-2xl mb-1">Welcome back</h1>
-            <p className="text-white/30 text-[13px]">Sign in to your admin dashboard</p>
+            <p className="text-white/30 text-[13px]">Sign in to your account</p>
           </div>
 
           {error && (
@@ -54,7 +69,7 @@ export default function SignInPage() {
               <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Email Address</label>
               <input
                 required type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@vantamotors.com"
+                placeholder="your@email.com"
                 className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 focus:outline-none focus:border-[#C9A84C]/50 transition-colors"
               />
             </div>

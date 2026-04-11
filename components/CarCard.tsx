@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Gauge, Calendar, Zap, ArrowUpRight, Heart, BarChart2 } from "lucide-react";
+import { Gauge, Calendar, Zap, ArrowUpRight, Heart, BarChart2, ShoppingBag } from "lucide-react";
 import type { Car } from "@/lib/types";
 import { useWishlist } from "@/lib/wishlist";
 import { useCompare } from "@/lib/compare";
+import { useCart } from "@/lib/cart";
 
 const BADGE_STYLES: Record<string, string> = {
   Featured:      "bg-[#C9A84C] text-black",
@@ -19,8 +20,10 @@ const BADGE_STYLES: Record<string, string> = {
 export default function CarCard({ car, onClick }: { car: Car; onClick?: () => void }) {
   const { toggle: wishToggle, has: wishHas } = useWishlist();
   const { toggle: cmpToggle,  has: cmpHas, ids: cmpIds } = useCompare();
+  const { addToCart, isInCart } = useCart();
   const wished   = wishHas(car.id);
   const compared = cmpHas(car.id);
+  const inCart   = isInCart(car.id);
   const cmpFull  = cmpIds.length >= 3 && !compared;
 
   const monthly = Math.round(
@@ -47,6 +50,21 @@ export default function CarCard({ car, onClick }: { car: Car; onClick?: () => vo
 
         {/* Action icons */}
         <div className="absolute top-3 right-3 flex flex-col gap-1.5">
+          {/* Cart */}
+          {car.available && (
+            <button
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); if (!inCart) addToCart(car); }}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm ${
+                inCart
+                  ? "bg-[#C9A84C] text-black"
+                  : "bg-black/50 text-white/40 hover:text-[#C9A84C] opacity-0 group-hover:opacity-100"
+              }`}
+              aria-label="Add to cart"
+              title={inCart ? "In your selection" : "Add to selection"}
+            >
+              <ShoppingBag size={13} />
+            </button>
+          )}
           {/* Wishlist */}
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); wishToggle(car.id); }}

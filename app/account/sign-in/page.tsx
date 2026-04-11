@@ -48,7 +48,7 @@ export default function UserAuthPage() {
         <div className="max-w-sm w-full mx-auto">
 
           <Link href="/" className="flex flex-col leading-none mb-12">
-            <span className="font-black text-white text-[22px] tracking-[0.22em] uppercase">VANTA</span>
+            <span className="font-black text-white text-[22px] tracking-[0.22em] uppercase">LUXE</span>
             <span className="text-[#C9A84C] text-[8px] tracking-[0.6em] uppercase font-bold">Motors</span>
           </Link>
 
@@ -85,7 +85,7 @@ export default function UserAuthPage() {
               <div className="mb-6">
                 <div className="h-px w-8 bg-[#C9A84C] mb-4" />
                 <h1 className="text-white font-bold text-2xl mb-1">
-                  {tab === "signin" ? "Welcome back" : "Join VANTA"}
+                  {tab === "signin" ? "Welcome back" : "Join LUXE"}
                 </h1>
                 <p className="text-white/30 text-[13px]">
                   {tab === "signin"
@@ -137,11 +137,6 @@ export default function UserAuthPage() {
                   }
                 </button>
               </form>
-
-              <p className="text-white/15 text-[11px] text-center mt-5">
-                Admin?{" "}
-                <Link href="/sign-in" className="text-[#C9A84C]/50 hover:text-[#C9A84C] transition-colors">Dashboard →</Link>
-              </p>
             </>
           )}
         </div>

@@ -23,7 +23,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="font-black text-xl tracking-[0.15em] uppercase mb-4">
-              VANTA<span className="text-[#C9A84C] font-semibold text-[11px] tracking-[0.4em] ml-2">Motors</span>
+              LUXE<span className="text-[#C9A84C] font-semibold text-[11px] tracking-[0.4em] ml-2">Motors</span>
             </div>
             <p className="text-white/30 text-sm leading-relaxed mb-6">
               Premium certified vehicles.<br />Exceptional service since 2008.
@@ -32,8 +32,8 @@ export default function Footer() {
               <a href="tel:+15551234567" className="flex items-center gap-2 hover:text-[#C9A84C] transition-colors">
                 <Phone size={13} /> +1 (555) 123-4567
               </a>
-              <a href="mailto:enquiries@vantamotors.com" className="flex items-center gap-2 hover:text-[#C9A84C] transition-colors">
-                <Mail size={13} /> enquiries@vantamotors.com
+              <a href="mailto:enquiries@luxemotors.com" className="flex items-center gap-2 hover:text-[#C9A84C] transition-colors">
+                <Mail size={13} /> enquiries@luxemotors.com
               </a>
               <p className="flex items-start gap-2">
                 <MapPin size={13} className="mt-0.5 shrink-0" /> 123 Prestige Drive,<br />Beverly Hills, CA
@@ -73,7 +73,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/5 max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-white/20">
-          <p>© 2025 VANTA Motors. All rights reserved.</p>
+          <p>© 2025 LUXE Motors. All rights reserved.</p>
           <p>Privacy Policy · Terms of Service</p>
         </div>
       </footer>

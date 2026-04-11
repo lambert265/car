@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle, Mail } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function SignUpPage() {
@@ -12,22 +12,66 @@ export default function SignUpPage() {
   const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
   const [confirm,  setConfirm]  = useState("");
+  const [code,     setCode]     = useState("");
   const [show,     setShow]     = useState(false);
   const [loading,  setLoading]  = useState(false);
   const [error,    setError]    = useState("");
-  const [done,     setDone]     = useState(false);
+  const [step,     setStep]     = useState<"form" | "code" | "success">("form");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (password !== confirm) { setError("Passwords do not match."); return; }
     if (password.length < 8)  { setError("Password must be at least 8 characters."); return; }
     setLoading(true); setError("");
-    const { error } = await supabase.auth.signUp({
-      email, password,
-      options: { data: { full_name: name } },
+    
+    const { error: signUpError } = await supabase.auth.signUp({
+      email, 
+      password,
+      options: { 
+        data: { full_name: name },
+        emailRedirectTo: `${window.location.origin}/sign-in`
+      },
     });
-    if (error) { setError(error.message); setLoading(false); return; }
-    setDone(true);
+    
+    if (signUpError) { 
+      setError(signUpError.message); 
+      setLoading(false); 
+      return; 
+    }
+    
+    setLoading(false);
+    setStep("code");
+  }
+
+  async function handleVerifyCode(e: React.FormEvent) {
+    e.preventDefault();
+    if (!code || code.length !== 6) {
+      setError("Please enter a valid 6-digit code");
+      return;
+    }
+    
+    setLoading(true);
+    setError("");
+
+    const { error: verifyError } = await supabase.auth.verifyOtp({
+      email,
+      token: code,
+      type: 'signup'
+    });
+
+    if (verifyError) {
+      setError(verifyError.message);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    setStep("success");
+    
+    // Redirect after 2 seconds
+    setTimeout(() => {
+      router.push("/sign-in");
+    }, 2000);
   }
 
   return (
@@ -38,29 +82,92 @@ export default function SignUpPage() {
         <div className="max-w-sm w-full mx-auto">
 
           <Link href="/" className="flex flex-col leading-none mb-12">
-            <span className="font-black text-white text-[22px] tracking-[0.22em] uppercase">VANTA</span>
+            <span className="font-black text-white text-[22px] tracking-[0.22em] uppercase">LUXE</span>
             <span className="text-[#C9A84C] text-[8px] tracking-[0.6em] uppercase font-bold">Motors</span>
           </Link>
 
           <div className="mb-8">
             <div className="h-px w-8 bg-[#C9A84C] mb-4" />
-            <h1 className="text-white font-bold text-2xl mb-1">Create account</h1>
-            <p className="text-white/30 text-[13px]">Set up your VANTA admin access</p>
+            <h1 className="text-white font-bold text-2xl mb-1">
+              {step === "form" ? "Create account" : step === "code" ? "Verify your email" : "Account created!"}
+            </h1>
+            <p className="text-white/30 text-[13px]">
+              {step === "form" ? "Set up your LUXE account" : step === "code" ? "Enter the code sent to your email" : "You're all set"}
+            </p>
           </div>
 
-          {done ? (
+          {step === "success" ? (
             <div className="py-8 text-center">
               <div className="w-14 h-14 border border-[#C9A84C]/30 flex items-center justify-center mx-auto mb-5">
                 <CheckCircle size={24} className="text-[#C9A84C]" />
               </div>
-              <h3 className="text-white font-bold text-lg mb-2">Check your email</h3>
+              <h3 className="text-white font-bold text-lg mb-2">Email Verified!</h3>
               <p className="text-white/30 text-[13px] leading-relaxed mb-6">
-                We've sent a confirmation link to <span className="text-white/60">{email}</span>. Click it to activate your account.
+                Your account has been successfully created. Redirecting to sign in...
               </p>
-              <Link href="/sign-in" className="btn-gold inline-flex items-center gap-2 px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em]">
-                Back to Sign In
-              </Link>
             </div>
+          ) : step === "code" ? (
+            <>
+              <div className="flex items-center gap-3 bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-4 py-3 mb-6">
+                <Mail size={14} className="text-[#C9A84C] shrink-0" />
+                <p className="text-[#C9A84C] text-[12px]">
+                  Verification code sent to <span className="font-semibold">{email}</span>
+                </p>
+              </div>
+
+              {error && (
+                <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 px-4 py-3 mb-6">
+                  <AlertCircle size={14} className="text-red-400 shrink-0" />
+                  <p className="text-red-400 text-[12px]">{error}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleVerifyCode} className="space-y-4">
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">
+                    Verification Code
+                  </label>
+                  <input
+                    type="text"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000"
+                    maxLength={6}
+                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[18px] px-4 py-4 focus:outline-none focus:border-[#C9A84C]/50 transition-colors text-center tracking-[0.5em] font-mono"
+                  />
+                  <p className="text-white/20 text-[11px] mt-2 text-center">
+                    Check your email for the 6-digit code
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading || code.length !== 6}
+                  className="btn-gold w-full py-4 text-[11px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                >
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      Verifying...
+                    </span>
+                  ) : (
+                    <>
+                      <span>Confirm</span>
+                      <ArrowRight size={13} />
+                    </>
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <button
+                  onClick={() => setStep("form")}
+                  className="text-white/30 hover:text-[#C9A84C] text-[12px] transition-colors"
+                >
+                  ← Back to sign up
+                </button>
+              </div>
+            </>
           ) : (
             <>
               {error && (
@@ -80,7 +187,7 @@ export default function SignUpPage() {
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Email Address</label>
                   <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@vantamotors.com"
+                    placeholder="your@email.com"
                     className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 focus:outline-none focus:border-[#C9A84C]/50 transition-colors" />
                 </div>
                 <div>

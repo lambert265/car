@@ -22,6 +22,7 @@
         <a href="index.html#about">About</a>
       </nav>
       <div class="nav-actions">
+        <select id="currencySelect" onchange="setCurrency(this.value)" style="background:#111;color:#C9A84C;border:1px solid rgba(201,168,76,0.3);padding:6px 10px;border-radius:6px;font-size:12px;cursor:pointer;outline:none;"></select>
         <a href="tel:+15551234567" class="btn-outline">📞 Call Us</a>
         <a href="inventory.html" class="btn-primary">Browse Inventory</a>
       </div>
@@ -37,7 +38,12 @@
     </div>
   </header>
 
-  <!-- PAGE HEADER -->
+  <!-- CURRENCY BAR -->
+  <div style="background:#0e0e0e;border-bottom:1px solid rgba(255,255,255,0.06);padding:8px 2rem;display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,0.4);">
+    <span>🌍 Prices shown in:</span>
+    <select id="currencyBarSelect" onchange="setCurrency(this.value)" style="background:#141414;color:#C9A84C;border:1px solid rgba(201,168,76,0.3);padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer;outline:none;"></select>
+    <span id="currencyNote" style="color:rgba(255,255,255,0.25);font-size:11px;">Auto-detected from your location</span>
+  </div>
   <div class="page-header">
     <div class="container">
       <p class="breadcrumb"><a href="index.html">Home</a> › Inventory</p>
@@ -157,10 +163,84 @@
   </footer>
 
   <script src="data.js"></script>
+  <script>
+  // ============================================================
+  // CURRENCY CONVERTER — must load before script.js and carCard
+  // ============================================================
+  const CURRENCIES = {
+    USD: { symbol: '$',  rate: 1,       flag: '🇺🇸', label: 'USD' },
+    GBP: { symbol: '£',  rate: 0.79,    flag: '🇬🇧', label: 'GBP' },
+    EUR: { symbol: '€',  rate: 0.92,    flag: '🇪🇺', label: 'EUR' },
+    GHS: { symbol: '₵',  rate: 15.2,    flag: '🇬🇭', label: 'GHS' },
+    NGN: { symbol: '₦',  rate: 1620,    flag: '🇳🇬', label: 'NGN' },
+    ZAR: { symbol: 'R',  rate: 18.6,    flag: '🇿🇦', label: 'ZAR' },
+    KES: { symbol: 'KSh',rate: 129,     flag: '🇰🇪', label: 'KES' },
+    AED: { symbol: 'د.إ',rate: 3.67,    flag: '🇦🇪', label: 'AED' },
+    CAD: { symbol: 'C$', rate: 1.36,    flag: '🇨🇦', label: 'CAD' },
+    AUD: { symbol: 'A$', rate: 1.53,    flag: '🇦🇺', label: 'AUD' },
+    JPY: { symbol: '¥',  rate: 149,     flag: '🇯🇵', label: 'JPY' },
+    INR: { symbol: '₹',  rate: 83,      flag: '🇮🇳', label: 'INR' },
+    BRL: { symbol: 'R$', rate: 4.97,    flag: '🇧🇷', label: 'BRL' },
+    SGD: { symbol: 'S$', rate: 1.34,    flag: '🇸🇬', label: 'SGD' },
+    CHF: { symbol: 'Fr', rate: 0.90,    flag: '🇨🇭', label: 'CHF' },
+  };
+
+  // Country code → currency mapping
+  const COUNTRY_CURRENCY = {
+    US:'USD',GB:'GBP',DE:'EUR',FR:'EUR',IT:'EUR',ES:'EUR',NL:'EUR',BE:'EUR',
+    PT:'EUR',AT:'EUR',IE:'EUR',GH:'GHS',NG:'NGN',ZA:'ZAR',KE:'KES',
+    AE:'AED',SA:'AED',CA:'CAD',AU:'AUD',JP:'JPY',IN:'INR',BR:'BRL',
+    SG:'SGD',CH:'CHF',
+  };
+
+  let activeCurrency = 'USD';
+
+  // Build both currency dropdowns
+  ['currencySelect', 'currencyBarSelect'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    Object.entries(CURRENCIES).forEach(([code, c]) => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = `${c.flag} ${c.label}`;
+      el.appendChild(opt);
+    });
+  });
+
+  function setCurrency(code) {
+    activeCurrency = code;
+    ['currencySelect', 'currencyBarSelect'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = code;
+    });
+    if (typeof applyFilters === 'function') applyFilters();
+  }
+
+  function convertPrice(usdPrice) {
+    const c = CURRENCIES[activeCurrency];
+    const converted = usdPrice * c.rate;
+    if (activeCurrency === 'JPY' || activeCurrency === 'NGN' || activeCurrency === 'INR' || activeCurrency === 'KES') {
+      if (converted >= 1000000) return c.symbol + (converted/1000000).toFixed(1) + 'M';
+      return c.symbol + Math.round(converted).toLocaleString();
+    }
+    if (converted >= 1000000) return c.symbol + (converted/1000000).toFixed(2) + 'M';
+    return c.symbol + converted.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0});
+  }
+
+  // Auto-detect location on page load
+  fetch('https://ipapi.co/json/')
+    .then(r => r.json())
+    .then(data => {
+      const currency = COUNTRY_CURRENCY[data.country_code] || 'USD';
+      setCurrency(currency);
+    })
+    .catch(() => setCurrency('USD'));
+  </script>
   <script src="script.js"></script>
   <script>
     function updatePrice(v) {
-      document.getElementById('priceLabel').textContent = '$' + Number(v).toLocaleString();
+      const label = typeof convertPrice === 'function' ? convertPrice(Number(v)) : '$' + Number(v).toLocaleString();
+      document.getElementById('priceLabel').textContent = label;
     }
 
     function getChecked(name) {

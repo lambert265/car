@@ -52,11 +52,6 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/40" />
         </div>
 
-        {/* Vertical grid lines */}
-        <div className="absolute inset-0 pointer-events-none"
-          style={{backgroundImage:"repeating-linear-gradient(90deg,transparent,transparent 119px,rgba(201,168,76,0.03) 119px,rgba(201,168,76,0.03) 120px)"}}
-        />
-
         {/* AMG badge — top right */}
         <div className="absolute top-32 right-10 z-10 hidden lg:flex flex-col items-end gap-2">
           <p className="text-[10px] uppercase tracking-[0.4em] text-[#C9A84C]/70 font-semibold">Featuring</p>
@@ -109,7 +104,7 @@ export default function HomePage() {
             </div>
 
             {/* Stats row */}
-            <div className="flex items-center gap-0 border-t border-white/10 pt-10">
+            <div className="flex items-center gap-0 pt-10">
               {[
                 ["200+", "Vehicles"],
                 ["15+",  "Brands"],
@@ -122,7 +117,7 @@ export default function HomePage() {
                       style={{fontFamily:"'Cormorant Garamond', Georgia, serif"}}>{val}</p>
                     <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mt-1">{lbl}</p>
                   </div>
-                  {i < 3 && <div className="h-8 w-px bg-white/10 mr-8" />}
+                  {i < 3 && <div className="mr-8" />}
                 </div>
               ))}
             </div>

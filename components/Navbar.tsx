@@ -2,12 +2,14 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, ArrowRight, Search, Heart, BarChart2, User, LogOut, Package } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, ArrowRight, Search, Heart, BarChart2, User, LogOut, Package, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWishlist } from "@/lib/wishlist";
 import { useCompare } from "@/lib/compare";
 import { useAuth } from "@/lib/auth.tsx";
+import { useCart } from "@/lib/cart";
 import { CARS } from "@/lib/cars";
+import CartDrawer from "@/components/CartDrawer";
 
 const NAV_LINKS = [
   { label: "Inventory", href: "/inventory" },
@@ -42,6 +44,9 @@ export default function Navbar() {
   const { ids: wishIds }  = useWishlist();
   const { ids: cmpIds }   = useCompare();
   const { user, signOut } = useAuth();
+  const { cart, guestCart, openAuthPrompt, setOpenAuthPrompt } = useCart();
+  const cartCount = (user ? cart : guestCart).length;
+  const [cartOpen, setCartOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -112,7 +117,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between px-6 lg:px-10 h-16" ref={dropdownRef}>
 
           <Link href="/" className="flex flex-col leading-none shrink-0">
-            <span className="font-black text-white text-[20px] tracking-[0.22em] uppercase">VANTA</span>
+            <span className="font-black text-white text-[20px] tracking-[0.22em] uppercase">LUXE</span>
             <span className="text-[#C9A84C] text-[7px] tracking-[0.6em] uppercase font-bold mt-[-1px]">Motors</span>
           </Link>
 
@@ -168,6 +173,14 @@ export default function Navbar() {
 
           {/* Right icons */}
           <div className="flex items-center gap-2">
+            {/* Cart */}
+            <button onClick={() => setCartOpen(true)}
+              className="relative flex w-9 h-9 items-center justify-center text-white/30 hover:text-[#C9A84C] transition-colors rounded-full hover:bg-white/[0.05]">
+              <ShoppingBag size={16} />
+              {cartCount > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#C9A84C] rounded-full text-black text-[8px] font-black flex items-center justify-center">{cartCount}</span>
+              )}
+            </button>
             {/* Search */}
             <button onClick={() => setSearchOpen(true)}
               className="hidden lg:flex w-9 h-9 items-center justify-center text-white/30 hover:text-[#C9A84C] transition-colors rounded-full hover:bg-white/[0.05]">
@@ -228,7 +241,7 @@ export default function Navbar() {
                             </div>
                             <div className="min-w-0">
                               <p className="text-white/80 font-semibold text-[13px] truncate">
-                                {user.user_metadata?.full_name || "VANTA Member"}
+                                {user.user_metadata?.full_name || "LUXE Member"}
                               </p>
                               <p className="text-white/25 text-[11px] truncate">{user.email}</p>
                             </div>
@@ -328,6 +341,35 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+
+      {/* Guest auth prompt */}
+      <AnimatePresence>
+        {openAuthPrompt && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+            onClick={() => setOpenAuthPrompt(false)}>
+            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
+              className="bg-[#0d0d0d] border border-[#C9A84C]/20 p-8 w-full max-w-sm text-center"
+              onClick={e => e.stopPropagation()}>
+              <ShoppingBag size={28} className="text-[#C9A84C] mx-auto mb-4" />
+              <h3 className="text-white font-bold text-[18px] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Save Your Selection</h3>
+              <p className="text-white/35 text-[13px] mb-6">Sign in to save your cart and complete your enquiry.</p>
+              <div className="space-y-2">
+                <Link href="/account/sign-in" onClick={() => setOpenAuthPrompt(false)}
+                  className="flex items-center justify-center w-full py-3 bg-[#C9A84C] text-black text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-[#E8C97A] transition-colors">
+                  Sign In
+                </Link>
+                <button onClick={() => setOpenAuthPrompt(false)}
+                  className="w-full py-3 border border-white/[0.08] text-white/30 text-[11px] uppercase tracking-wider hover:text-white transition-colors">
+                  Continue Browsing
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ── MOBILE DRAWER ── */}
       <AnimatePresence>
         {mobileOpen && (
@@ -339,7 +381,7 @@ export default function Navbar() {
               className="fixed right-0 top-0 bottom-0 z-[70] w-[300px] bg-[#080808] border-l border-[#C9A84C]/10 flex flex-col">
               <div className="flex items-center justify-between px-6 h-16 border-b border-white/[0.06] shrink-0">
                 <div className="flex flex-col leading-none">
-                  <span className="font-black text-white text-[17px] tracking-[0.2em] uppercase">VANTA</span>
+                  <span className="font-black text-white text-[17px] tracking-[0.2em] uppercase">LUXE</span>
                   <span className="text-[#C9A84C] text-[7px] tracking-[0.55em] uppercase font-bold">Motors</span>
                 </div>
                 <button onClick={() => setMobileOpen(false)}

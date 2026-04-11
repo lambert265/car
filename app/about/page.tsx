@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle, ArrowRight, Award, Users, Car, Clock } from "lucide-react";
 
-export const metadata = { title: "About — VANTA Motors" };
+export const metadata = { title: "About — LUXE Motors" };
 
 const TEAM = [
   { name: "Alexander Reid",  role: "Founder & CEO",          img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&auto=format&fit=crop" },
@@ -19,7 +19,7 @@ export default function AboutPage() {
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1800&q=85&auto=format&fit=crop"
-            alt="VANTA showroom" fill priority sizes="100vw"
+            alt="LUXE showroom" fill priority sizes="100vw"
             className="object-cover object-center opacity-15"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/90 to-[#080808]/60" />
@@ -38,7 +38,7 @@ export default function AboutPage() {
             <em style={{ color: "#C9A84C" }}>getting it right.</em>
           </h1>
           <p className="text-white/40 text-[15px] leading-relaxed max-w-xl">
-            Founded in 2008, VANTA Motors was built on a single belief: that buying a luxury car should feel as exceptional as driving one.
+            Founded in 2008, LUXE Motors was built on a single belief: that buying a luxury car should feel as exceptional as driving one.
           </p>
         </div>
       </section>
@@ -83,7 +83,7 @@ export default function AboutPage() {
             <div className="h-px w-8 bg-[#C9A84C] mb-5" />
             <h2 className="text-white font-bold text-3xl mb-5">Who We Are</h2>
             <p className="text-white/35 text-[14px] leading-relaxed mb-4">
-              VANTA Motors has been the trusted destination for discerning buyers seeking the world's finest automobiles. What started as a small boutique dealership has grown into one of the most respected names in luxury automotive retail.
+              LUXEMotors has been the trusted destination for discerning buyers seeking the world's finest automobiles. What started as a small boutique dealership has grown into one of the most respected names in luxury automotive retail.
             </p>
             <p className="text-white/35 text-[14px] leading-relaxed mb-8">
               Our philosophy is simple: every client deserves a buying experience as exceptional as the vehicle they're purchasing. Transparent pricing, no pressure, and white-glove service from first inquiry to final handover.
