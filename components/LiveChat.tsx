@@ -81,12 +81,12 @@ export default function LiveChat() {
   const messages = mode === "ai" ? aiMsgs : humanMsgs;
 
   return (
-    <div className="fixed bottom-24 md:bottom-8 right-6 z-[90] flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-4 md:right-6 z-[90] flex flex-col items-end gap-3">
 
       {/* ── CHAT WINDOW ── */}
       {open && !minimized && (
-        <div className="w-[360px] bg-[#0d0d0d] border border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden"
-          style={{ height: mode === "choose" ? "auto" : 480 }}>
+        <div className="w-[calc(100vw-2rem)] max-w-[360px] bg-[#0d0d0d] border border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden"
+          style={{ height: mode === "choose" ? "auto" : "min(480px, calc(100vh - 180px))" }}>
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 bg-[#0a0a0a] border-b border-white/[0.06] shrink-0">
@@ -239,10 +239,10 @@ export default function LiveChat() {
       {/* Toggle button */}
       <button
         onClick={() => { setOpen((v) => !v); setMinimized(false); }}
-        className="w-14 h-14 rounded-full bg-[#C9A84C] text-black flex items-center justify-center shadow-[0_8px_32px_rgba(201,168,76,0.4)] hover:bg-[#E8C97A] hover:shadow-[0_8px_40px_rgba(201,168,76,0.6)] transition-all duration-200 relative"
+        className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#C9A84C] text-black flex items-center justify-center shadow-[0_8px_32px_rgba(201,168,76,0.4)] hover:bg-[#E8C97A] hover:shadow-[0_8px_40px_rgba(201,168,76,0.6)] transition-all duration-200 relative"
       >
-        {open ? <X size={20} /> : <MessageSquare size={20} />}
-        {!open && <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-[#080808]" />}
+        {open ? <X size={18} className="md:w-5 md:h-5" /> : <MessageSquare size={18} className="md:w-5 md:h-5" />}
+        {!open && <span className="absolute -top-1 -right-1 w-3 h-3 md:w-3.5 md:h-3.5 bg-emerald-400 rounded-full border-2 border-[#080808]" />}
       </button>
     </div>
   );

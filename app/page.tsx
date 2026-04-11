@@ -104,7 +104,7 @@ export default function HomePage() {
             </div>
 
             {/* Stats row */}
-            <div className="flex items-center gap-0 pt-10">
+            <div className="grid grid-cols-2 sm:flex sm:items-center gap-6 sm:gap-0 pt-10">
               {[
                 ["200+", "Vehicles"],
                 ["15+",  "Brands"],
@@ -112,12 +112,12 @@ export default function HomePage() {
                 ["16yr", "Trusted"],
               ].map(([val, lbl], i) => (
                 <div key={lbl} className="flex items-center">
-                  <div className="pr-8">
+                  <div className="sm:pr-8">
                     <p className="text-white font-bold text-[22px] leading-none"
                       style={{fontFamily:"'Cormorant Garamond', Georgia, serif"}}>{val}</p>
                     <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mt-1">{lbl}</p>
                   </div>
-                  {i < 3 && <div className="mr-8" />}
+                  {i < 3 && <div className="hidden sm:block sm:mr-8" />}
                 </div>
               ))}
             </div>
