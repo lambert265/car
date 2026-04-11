@@ -47,11 +47,13 @@ function GoldCheckbox({ checked, onClick }: { checked: boolean; onClick: () => v
   );
 }
 
-  function fmt(n: number) {
-    const converted = n * currency.rate;
-    if (converted >= 1000000) return `${currency.symbol}${(converted / 1000000).toFixed(1)}M`;
-    return `${currency.symbol}${(converted / 1000).toFixed(0)}k`;
-  }
+function fmtPrice(n: number, symbol: string, rate: number) {
+  const v = n * rate;
+  if (v >= 1_000_000) return `${symbol}${(v / 1_000_000).toFixed(1)}M`;
+  return `${symbol}${(v / 1000).toFixed(0)}k`;
+}
+
+export default function InventoryClient() {
 
 export default function InventoryClient() {
   const params = useSearchParams();
@@ -112,7 +114,7 @@ export default function InventoryClient() {
     ...cats.map((c)    => ({ label: c,                  onRemove: () => setCats(cats.filter((x) => x !== c))       })),
     ...brands.map((b)  => ({ label: b,                  onRemove: () => setBrands(brands.filter((x) => x !== b))   })),
     ...fuels.map((f)   => ({ label: f,                  onRemove: () => setFuels(fuels.filter((x) => x !== f))     })),
-    ...(maxPrice < MAX_PRICE ? [{ label: `Under ${fmt(maxPrice)}`, onRemove: () => setMaxPrice(MAX_PRICE) }] : []),
+    ...(maxPrice < MAX_PRICE ? [{ label: `Under ${fmtPrice(maxPrice, currency.symbol, currency.rate)}`, onRemove: () => setMaxPrice(MAX_PRICE) }] : []),
     ...(availOnly ? [{ label: "Available Only",          onRemove: () => setAvailOnly(false)                        }] : []),
     ...(query     ? [{ label: `"${query}"`,              onRemove: () => setQuery("")                               }] : []),
   ];
@@ -176,7 +178,7 @@ export default function InventoryClient() {
                   <div className="pt-1 pr-1">
                     <div className="flex justify-between mb-3">
                       <span className="text-[11px] text-white/25">Up to</span>
-                      <span className="text-[12px] font-bold text-[#C9A84C]">{fmt(maxPrice)}</span>
+                      <span className="text-[12px] font-bold text-[#C9A84C]">{fmtPrice(maxPrice, currency.symbol, currency.rate)}</span>
                     </div>
                     <div className="relative h-px bg-white/[0.08] mb-1">
                       <div
@@ -191,7 +193,7 @@ export default function InventoryClient() {
                       style={{ accentColor: "#C9A84C" }}
                     />
                     <div className="flex justify-between mt-2 text-[10px] text-white/20">
-                      <span>$50k</span><span>{fmt(MAX_PRICE)}</span>
+                      <span>$50k</span><span>{fmtPrice(MAX_PRICE, currency.symbol, currency.rate)}</span>
                     </div>
                   </div>
                 )}
