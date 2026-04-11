@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, Fragment } from "react";
 
 interface CompareCtx {
   ids: number[];
@@ -13,16 +13,23 @@ const Ctx = createContext<CompareCtx>({ ids: [], toggle: () => {}, has: () => fa
 export function CompareProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [ids, setIds] = useState<number[]>([]);
 
-  function toggle(id: number) {
+  const toggle = (id: number) => {
     setIds((prev) => {
       if (prev.includes(id)) return prev.filter((x) => x !== id);
       if (prev.length >= 3) return prev;
       return [...prev, id];
     });
-  }
+  };
+
+  const value = {
+    ids,
+    toggle,
+    has: (id: number) => ids.includes(id),
+    clear: () => setIds([])
+  };
 
   return (
-    <Ctx.Provider value={{ ids, toggle, has: (id) => ids.includes(id), clear: () => setIds([]) }}>
+    <Ctx.Provider value={value}>
       {children}
     </Ctx.Provider>
   );
