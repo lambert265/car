@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Phone, MessageCircle, Calendar, Gauge, Fuel, ArrowRight,
-  CheckCircle, X, ChevronLeft, ChevronRight, ZoomIn, ArrowLeft
+  CheckCircle, X, ChevronLeft, ChevronRight, ZoomIn, ArrowLeft, ShoppingCart
 } from "lucide-react";
 import type { Car } from "@/lib/types";
 import CarCard from "@/components/CarCard";
+import { useCart } from "@/lib/cart";
 
 function Lightbox({ images, index, onClose }: { images: string[]; index: number; onClose: () => void }) {
   const [current, setCurrent] = useState(index);
@@ -235,13 +236,16 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 mb-3">
               <button
                 onClick={() => document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth" })}
-                className="btn-gold flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em]"
+                className="btn-gold w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em]"
               >
                 Request Viewing
               </button>
+              <AddToCartButton car={car} />
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={`https://wa.me/15551234567?text=Hi, I'm interested in the ${encodeURIComponent(car.year + " " + car.name)}`}
                 target="_blank" rel="noopener noreferrer"
@@ -331,5 +335,27 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
         )}
       </div>
     </div>
+  );
+}
+
+function AddToCartButton({ car }: { car: Car }) {
+  const { addToCart, isInCart } = useCart();
+  const inCart = isInCart(car.id);
+
+  return (
+    <button
+      onClick={() => addToCart(car)}
+      disabled={inCart || !car.available}
+      className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] transition-colors ${
+        inCart
+          ? "bg-white/5 text-white/20 border border-white/[0.08] cursor-not-allowed"
+          : !car.available
+          ? "bg-white/5 text-white/20 border border-white/[0.08] cursor-not-allowed"
+          : "border border-[#C9A84C]/30 text-[#C9A84C] hover:bg-[#C9A84C]/5 hover:border-[#C9A84C]/50"
+      }`}
+    >
+      <ShoppingCart size={14} />
+      {inCart ? "In Cart" : !car.available ? "Sold Out" : "Add to Cart"}
+    </button>
   );
 }

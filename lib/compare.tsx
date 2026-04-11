@@ -10,7 +10,7 @@ interface CompareCtx {
 
 const Ctx = createContext<CompareCtx>({ ids: [], toggle: () => {}, has: () => false, clear: () => {} });
 
-export function CompareProvider({ children }: { children: ReactNode }): JSX.Element {
+export function CompareProvider({ children }: { children: ReactNode }) {
   const [ids, setIds] = useState<number[]>([]);
 
   function toggle(id: number) {
