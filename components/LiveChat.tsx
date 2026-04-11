@@ -114,7 +114,7 @@ export default function LiveChat() {
   const messages = mode === "ai" ? aiMsgs : humanMsgs;
 
   return (
-    <div className="fixed bottom-6 right-4 md:right-6 z-[90] flex flex-col items-end gap-3">
+    <div className="fixed bottom-[90px] md:bottom-8 right-4 md:right-6 z-[90] flex flex-col items-end gap-3">
 
       {/* ── CHAT WINDOW ── */}
       {open && !minimized && (
