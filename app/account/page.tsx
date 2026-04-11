@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { User, Package, Heart, LogOut, Car, Calendar, DollarSign, ChevronRight, Clock } from "lucide-react";
-import { useAuth } from "@/lib/auth.tsx";
+import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
 const STATUS_COLOR: Record<string, string> = {

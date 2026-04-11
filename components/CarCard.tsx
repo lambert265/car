@@ -1,11 +1,13 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
 import { Gauge, Calendar, Zap, ArrowUpRight, Heart, BarChart2, ShoppingBag } from "lucide-react";
 import type { Car } from "@/lib/types";
 import { useWishlist } from "@/lib/wishlist";
 import { useCompare } from "@/lib/compare";
 import { useCart } from "@/lib/cart";
+import { CurrencyContext } from "@/app/inventory/InventoryClient";
 
 const BADGE_STYLES: Record<string, string> = {
   Featured:      "bg-[#C9A84C] text-black",
@@ -21,6 +23,7 @@ export default function CarCard({ car, onClick }: { car: Car; onClick?: () => vo
   const { toggle: wishToggle, has: wishHas } = useWishlist();
   const { toggle: cmpToggle,  has: cmpHas, ids: cmpIds } = useCompare();
   const { addToCart, isInCart } = useCart();
+  const { symbol, rate } = useContext(CurrencyContext);
   const wished   = wishHas(car.id);
   const compared = cmpHas(car.id);
   const inCart   = isInCart(car.id);
@@ -30,6 +33,13 @@ export default function CarCard({ car, onClick }: { car: Car; onClick?: () => vo
     (car.price * 0.8 * (0.039 / 12) * Math.pow(1 + 0.039 / 12, 60)) /
     (Math.pow(1 + 0.039 / 12, 60) - 1)
   );
+
+  function fmtPrice(usd: number) {
+    const v = usd * rate;
+    return v >= 1_000_000
+      ? `${symbol}${(v / 1_000_000).toFixed(1)}M`
+      : `${symbol}${Math.round(v).toLocaleString()}`;
+  }
 
   const content = (
     <div className="group relative bg-[#0d0d0d] border border-white/[0.06] hover:border-[#C9A84C]/40 transition-all duration-300 hover:shadow-[0_0_0_1px_rgba(201,168,76,0.12),0_24px_64px_rgba(0,0,0,0.6)] hover:-translate-y-1 cursor-pointer overflow-hidden">
@@ -110,7 +120,7 @@ export default function CarCard({ car, onClick }: { car: Car; onClick?: () => vo
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-2">
           <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]/50">{car.brand}</p>
-          <p className="text-[#C9A84C] font-bold text-[15px] leading-none shrink-0">${car.price.toLocaleString()}</p>
+          <p className="text-[#C9A84C] font-bold text-[15px] leading-none shrink-0">{fmtPrice(car.price)}</p>
         </div>
         <h3 className="font-bold text-white/90 text-[15px] leading-snug mb-3 group-hover:text-white transition-colors duration-200">
           {car.year} {car.name}
@@ -123,7 +133,7 @@ export default function CarCard({ car, onClick }: { car: Car; onClick?: () => vo
         </div>
         <div className="flex items-center justify-between">
           <p className="text-[10px] text-white/20">
-            From <span className="text-white/35 font-semibold">${monthly.toLocaleString()}/mo</span>
+            From <span className="text-white/35 font-semibold">{fmtPrice(monthly)}/mo</span>
           </p>
           <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/20 group-hover:text-[#C9A84C] transition-colors duration-300 flex items-center gap-1">
             View Details <ArrowUpRight size={10} />

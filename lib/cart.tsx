@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { useAuth } from "@/lib/auth.tsx";
+import { useAuth } from "@/lib/auth";
 import type { Car } from "@/lib/types";
 
 interface CartCtx {

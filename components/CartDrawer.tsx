@@ -4,7 +4,7 @@ import Image from "next/image";
 import { X, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart";
-import { useAuth } from "@/lib/auth.tsx";
+import { useAuth } from "@/lib/auth";
 import CheckoutModal from "./CheckoutModal";
 
 interface Props {

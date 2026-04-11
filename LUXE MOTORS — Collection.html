@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/USER/Downloads/luxe-motors-catalog.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUXE MOTORS — Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./LUXE MOTORS — Collection_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080808;
+    --bg2: #0e0e0e;
+    --bg3: #141414;
+    --gold: #C9A84C;
+    --gold-dim: rgba(201,168,76,0.15);
+    --gold-border: rgba(201,168,76,0.3);
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.45);
+    --border: rgba(255,255,255,0.07);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--white); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+  /* NAVBAR */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8,8,8,0.92); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); letter-spacing: 3px; }
+  .nav-logo span { color: var(--muted); font-size: 12px; letter-spacing: 4px; display: block; margin-top: -4px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .cart-btn {
+    position: relative; background: transparent; border: 1px solid var(--gold-border);
+    color: var(--gold); padding: 8px 18px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 1px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .cart-btn:hover { background: var(--gold-dim); }
+  .cart-count {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--gold); color: #080808;
+    width: 18px; height: 18px; border-radius: 50%;
+    font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .auth-btn {
+    background: var(--gold); color: #080808;
+    border: none; padding: 8px 20px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 12px;
+    font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
+  }
+  .auth-btn:hover { opacity: 0.85; }
+  .auth-btn.signout { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+
+  /* HERO */
+  .hero {
+    text-align: center; padding: 80px 2rem 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,5vw,4rem); font-weight: 300; letter-spacing: 6px; color: var(--white); }
+  .hero p { color: var(--muted); font-size: 13px; letter-spacing: 3px; margin-top: 8px; }
+  .hero-line { width: 60px; height: 1px; background: var(--gold); margin: 20px auto; }
+
+  /* FILTERS */
+  .filters {
+    padding: 1.5rem 2rem; display: flex; gap: 12px; flex-wrap: wrap;
+    align-items: center; border-bottom: 1px solid var(--border);
+    position: sticky; top: 64px; z-index: 90;
+    background: rgba(8,8,8,0.95); backdrop-filter: blur(12px);
+  }
+  .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-label { color: var(--muted); font-size: 11px; letter-spacing: 2px; align-self: center; margin-right: 4px; }
+  .pill {
+    padding: 6px 16px; border-radius: 999px; font-size: 11px;
+    letter-spacing: 1px; cursor: pointer; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); transition: all 0.2s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .pill:hover { border-color: var(--gold-border); color: var(--gold); }
+  .pill.active { background: var(--gold); color: #080808; border-color: var(--gold); font-weight: 600; }
+  .search-input {
+    margin-left: auto; background: var(--bg3); border: 1px solid var(--border);
+    color: var(--white); padding: 8px 16px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 12px; width: 220px;
+    outline: none; transition: border 0.2s;
+  }
+  .search-input:focus { border-color: var(--gold-border); }
+  .search-input::placeholder { color: var(--muted); }
+  .results-count { color: var(--muted); font-size: 11px; letter-spacing: 1px; margin-left: 8px; white-space: nowrap; }
+
+  /* GRID */
+  .grid-container { padding: 2rem; }
+  .cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* CAR CARD */
+  .car-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .car-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-border);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.08);
+  }
+  .car-img {
+    width: 100%; height: 200px; object-fit: cover;
+    display: block; transition: transform 0.5s;
+  }
+  .car-card:hover .car-img { transform: scale(1.04); }
+  .car-img-wrap { overflow: hidden; position: relative; }
+  .car-category-badge {
+    position: absolute; top: 12px; left: 12px;
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 10px; letter-spacing: 2px; font-weight: 500;
+    text-transform: uppercase;
+  }
+  .badge-suv { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .badge-sedan { background: rgba(139,92,246,0.2); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+  .badge-sport { background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+  .badge-electric { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+  .car-body { padding: 1.2rem; }
+  .car-brand { font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
+  .car-model { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; margin: 2px 0 8px; }
+  .car-specs { display: flex; gap: 16px; margin-bottom: 14px; }
+  .spec { font-size: 11px; color: var(--muted); }
+  .spec strong { color: var(--white); display: block; font-size: 12px; font-weight: 500; }
+  .car-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
+  .car-price { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--gold); }
+  .add-cart-btn {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    color: var(--gold); padding: 7px 16px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 1px;
+    cursor: pointer; transition: all 0.2s; font-weight: 500;
+  }
+  .add-cart-btn:hover { background: var(--gold); color: #080808; }
+  .add-cart-btn.in-cart { background: var(--gold); color: #080808; }
+
+  /* EMPTY */
+  .empty { text-align: center; padding: 80px 2rem; color: var(--muted); }
+  .empty h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 8px; }
+
+  /* CART DRAWER */
+  .cart-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer {
+    position: fixed; right: 0; top: 0; bottom: 0; width: 420px; max-width: 100vw;
+    background: var(--bg2); border-left: 1px solid var(--border);
+    z-index: 201; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-header {
+    padding: 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cart-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; }
+  .close-cart { background: transparent; border: none; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1; }
+  .close-cart:hover { color: var(--white); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1rem; }
+  .cart-item {
+    display: flex; gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--border); align-items: center;
+  }
+  .cart-item img { width: 80px; height: 56px; object-fit: cover; border-radius: 4px; }
+  .cart-item-info { flex: 1; }
+  .cart-item-brand { font-size: 10px; letter-spacing: 2px; color: var(--gold); }
+  .cart-item-model { font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+  .cart-item-price { font-size: 13px; color: var(--gold); font-weight: 500; margin-top: 2px; }
+  .remove-item { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 4px; }
+  .remove-item:hover { color: #f87171; }
+  .cart-footer { padding: 1.5rem; border-top: 1px solid var(--border); }
+  .cart-total { display: flex; justify-content: space-between; margin-bottom: 16px; }
+  .cart-total span { color: var(--muted); font-size: 13px; letter-spacing: 1px; }
+  .cart-total strong { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
+  .checkout-btn {
+    width: 100%; background: var(--gold); color: #080808;
+    border: none; padding: 14px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 13px;
+    font-weight: 600; letter-spacing: 2px; cursor: pointer; transition: opacity 0.2s;
+  }
+  .checkout-btn:hover { opacity: 0.85; }
+  .cart-empty-msg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px; }
+
+  /* AUTH MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+    z-index: 300; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--gold-border);
+    border-radius: 12px; padding: 2.5rem; width: 100%; max-width: 400px;
+    transform: scale(0.95); transition: transform 0.3s;
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; text-align: center; margin-bottom: 6px; }
+  .modal p { color: var(--muted); font-size: 12px; text-align: center; letter-spacing: 1px; margin-bottom: 24px; }
+  .modal-gold-line { width: 40px; height: 1px; background: var(--gold); margin: 12px auto 20px; }
+  .modal-notice {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: var(--radius); padding: 12px; margin-bottom: 20px;
+    font-size: 12px; color: var(--gold); text-align: center; letter-spacing: 0.5px;
+  }
+  .form-field { margin-bottom: 14px; }
+  .form-field label { display: block; font-size: 11px; letter-spacing: 2px; color: var(--muted); margin-bottom: 6px; }
+  .form-field input {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    color: var(--white); padding: 10px 14px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 13px; outline: none; transition: border 0.2s;
+  }
+  .form-field input:focus { border-color: var(--gold-border); }
+  .modal-submit {
+    width: 100%; background: var(--gold); color: #080808;
+    border: none; padding: 12px; border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif; font-size: 13px;
+    font-weight: 600; letter-spacing: 2px; cursor: pointer; margin-top: 6px;
+    transition: opacity 0.2s;
+  }
+  .modal-submit:hover { opacity: 0.85; }
+  .modal-toggle { text-align: center; margin-top: 14px; font-size: 12px; color: var(--muted); }
+  .modal-toggle a { color: var(--gold); cursor: pointer; text-decoration: none; }
+  .modal-close-top { position: absolute; top: 12px; right: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+  .modal { position: relative; }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--bg3); border: 1px solid var(--gold-border); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius); font-size: 13px; z-index: 400;
+    transition: transform 0.3s; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: rgba(16,185,129,0.4); color: #34d399; }
+  .user-badge { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+  .user-badge span { color: var(--gold); }
+</style>
+<meta name="maxai-mui-classname-prefix" content="injectDocumentStart-2026-04-11T19:02:00.475Z"><script src="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/apps/content-scripts/website/maxai.js"></script><style id="_goober"> .go1475592160{height:0;}.go1671063245{height:auto;}.go1888806478{display:flex;flex-wrap:wrap;flex-grow:1;}@media (min-width:600px){.go1888806478{flex-grow:initial;min-width:288px;}}.go167266335{background-color:#313131;font-size:0.875rem;line-height:1.43;letter-spacing:0.01071em;color:#fff;align-items:center;padding:6px 16px;border-radius:4px;box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}.go3162094071{padding-left:20px;}.go3844575157{background-color:#313131;}.go1725278324{background-color:#43a047;}.go3651055292{background-color:#d32f2f;}.go4215275574{background-color:#ff9800;}.go1930647212{background-color:#2196f3;}.go946087465{display:flex;align-items:center;padding:8px 0;}.go703367398{display:flex;align-items:center;margin-left:auto;padding-left:16px;margin-right:-8px;}.go3963613292{width:100%;position:relative;transform:translateX(0);top:0;right:0;bottom:0;left:0;min-width:288px;}.go1141946668{box-sizing:border-box;display:flex;max-height:100%;position:fixed;z-index:1400;height:auto;width:auto;transition:top 300ms ease 0ms,right 300ms ease 0ms,bottom 300ms ease 0ms,left 300ms ease 0ms,max-width 300ms ease 0ms;pointer-events:none;max-width:calc(100% - 40px);}.go1141946668 .notistack-CollapseWrapper{padding:6px 0px;transition:padding 300ms ease 0ms;}@media (max-width:599.95px){.go1141946668{width:100%;max-width:calc(100% - 32px);}}.go3868796639 .notistack-CollapseWrapper{padding:2px 0px;}.go3118922589{top:14px;flex-direction:column;}.go1453831412{bottom:14px;flex-direction:column-reverse;}.go4027089540{left:20px;}@media (min-width:600px){.go4027089540{align-items:flex-start;}}@media (max-width:599.95px){.go4027089540{left:16px;}}.go2989568495{right:20px;}@media (min-width:600px){.go2989568495{align-items:flex-end;}}@media (max-width:599.95px){.go2989568495{right:16px;}}.go4034260886{left:50%;transform:translateX(-50%);}@media (min-width:600px){.go4034260886{align-items:center;}}</style><link id="USE_CHAT_GPT_AI_CONTENT_CSS_LINK_TAG" rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content.css"><link rel="stylesheet" href="./LUXE MOTORS — Collection_files/css2(1)"><style type="text/css">.transform-component-module_wrapper__SPB86 {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: hidden;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+.transform-component-module_content__FBWxo {
+  display: flex;
+  flex-wrap: wrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  transform-origin: 0% 0%;
+}
+.transform-component-module_content__FBWxo img {
+  pointer-events: none;
+}
+</style></head>
+<body>
+
+<nav>
+  <div class="nav-logo">LUXE <span>MOTORS</span></div>
+  <div class="nav-right">
+    <div id="authArea"><button class="auth-btn" onclick="openAuthModal()">SIGN IN</button></div>
+    <button class="cart-btn" onclick="toggleCart()">
+      CART
+      <span class="cart-count" id="cartCount" style="display:none">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>THE COLLECTION</h1>
+  <div class="hero-line"></div>
+  <p>200 EXCEPTIONAL AUTOMOBILES · 13 ICONIC BRANDS</p>
+</div>
+
+<div class="filters">
+  <span class="filter-label">CATEGORY</span>
+  <div class="filter-group" id="categoryFilters">
+    <button class="pill" data-cat="all">All</button>
+    <button class="pill" data-cat="sport">Sport</button>
+    <button class="pill" data-cat="suv">SUV</button>
+    <button class="pill active" data-cat="sedan">Sedan</button>
+    <button class="pill" data-cat="electric">Electric</button>
+  </div>
+  <span class="filter-label" style="margin-left:16px">BRAND</span>
+  <div class="filter-group" id="brandFilters">
+    <button class="pill active" data-brand="all">All</button>
+    <button class="pill" data-brand="Aston Martin">Aston Martin</button>
+    <button class="pill" data-brand="Audi">Audi</button>
+    <button class="pill" data-brand="BMW">BMW</button>
+    <button class="pill" data-brand="Bentley">Bentley</button>
+    <button class="pill" data-brand="Ferrari">Ferrari</button>
+    <button class="pill" data-brand="Lamborghini">Lamborghini</button>
+    <button class="pill" data-brand="Land Rover">Land Rover</button>
+    <button class="pill" data-brand="Maserati">Maserati</button>
+    <button class="pill" data-brand="McLaren">McLaren</button>
+    <button class="pill" data-brand="Mercedes-Benz">Mercedes-Benz</button>
+    <button class="pill" data-brand="Porsche">Porsche</button>
+    <button class="pill" data-brand="Rolls-Royce">Rolls-Royce</button>
+    <button class="pill" data-brand="Tesla">Tesla</button>
+  </div>
+  <input class="search-input" type="text" placeholder="Search model..." id="searchInput" oninput="renderCars()">
+  <span class="results-count" id="resultsCount">35 vehicles</span>
+</div>
+
+<div class="grid-container">
+  <div class="cars-grid" id="carsGrid">
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="Aston Martin Vanquish" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Aston Martin</div>
+        <div class="car-model">Vanquish</div>
+        <div class="car-specs">
+          <div class="spec"><strong>824</strong>HP</div>
+          <div class="spec"><strong>214 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$290,000</div>
+          <button class="add-cart-btn " onclick="addToCart(6)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="Audi RS7 Sportback" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">RS7 Sportback</div>
+        <div class="car-specs">
+          <div class="spec"><strong>591</strong>HP</div>
+          <div class="spec"><strong>190 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$120,000</div>
+          <button class="add-cart-btn " onclick="addToCart(10)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1551830820-330a71b99659" alt="Audi A8 L" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">A8 L</div>
+        <div class="car-specs">
+          <div class="spec"><strong>335</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$95,000</div>
+          <button class="add-cart-btn " onclick="addToCart(12)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="BMW 7 Series" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-model">7 Series</div>
+        <div class="car-specs">
+          <div class="spec"><strong>536</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$96,000</div>
+          <button class="add-cart-btn " onclick="addToCart(17)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="BMW M5" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-model">M5</div>
+        <div class="car-specs">
+          <div class="spec"><strong>617</strong>HP</div>
+          <div class="spec"><strong>190 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$110,000</div>
+          <button class="add-cart-btn " onclick="addToCart(19)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="Bentley Flying Spur" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Bentley</div>
+        <div class="car-model">Flying Spur</div>
+        <div class="car-specs">
+          <div class="spec"><strong>626</strong>HP</div>
+          <div class="spec"><strong>207 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$220,000</div>
+          <button class="add-cart-btn " onclick="addToCart(25)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1544636331-e26879cd4d9b" alt="Ferrari Roma" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Ferrari</div>
+        <div class="car-model">Roma</div>
+        <div class="car-specs">
+          <div class="spec"><strong>612</strong>HP</div>
+          <div class="spec"><strong>199 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$225,000</div>
+          <button class="add-cart-btn " onclick="addToCart(31)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="Maserati Quattroporte" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Maserati</div>
+        <div class="car-model">Quattroporte</div>
+        <div class="car-specs">
+          <div class="spec"><strong>580</strong>HP</div>
+          <div class="spec"><strong>202 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$140,000</div>
+          <button class="add-cart-btn " onclick="addToCart(53)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1551830820-330a71b99659" alt="Mercedes-Benz S-Class S680" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Mercedes-Benz</div>
+        <div class="car-model">S-Class S680</div>
+        <div class="car-specs">
+          <div class="spec"><strong>612</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$285,000</div>
+          <button class="add-cart-btn " onclick="addToCart(63)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="Mercedes-Benz Maybach S 680" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Mercedes-Benz</div>
+        <div class="car-model">Maybach S 680</div>
+        <div class="car-specs">
+          <div class="spec"><strong>621</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$215,000</div>
+          <button class="add-cart-btn " onclick="addToCart(69)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="Porsche Panamera Turbo S" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Porsche</div>
+        <div class="car-model">Panamera Turbo S</div>
+        <div class="car-specs">
+          <div class="spec"><strong>620</strong>HP</div>
+          <div class="spec"><strong>196 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$195,000</div>
+          <button class="add-cart-btn " onclick="addToCart(74)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="Rolls-Royce Ghost" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Ghost</div>
+        <div class="car-specs">
+          <div class="spec"><strong>563</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$335,000</div>
+          <button class="add-cart-btn " onclick="addToCart(79)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1544636331-e26879cd4d9b" alt="Rolls-Royce Phantom" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Phantom</div>
+        <div class="car-specs">
+          <div class="spec"><strong>563</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$455,000</div>
+          <button class="add-cart-btn " onclick="addToCart(80)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="Rolls-Royce Ghost Black Badge" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Ghost Black Badge</div>
+        <div class="car-specs">
+          <div class="spec"><strong>591</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$380,000</div>
+          <button class="add-cart-btn " onclick="addToCart(85)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1580273916550-e323be2ae537" alt="Audi RS6 Avant" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">RS6 Avant</div>
+        <div class="car-specs">
+          <div class="spec"><strong>591</strong>HP</div>
+          <div class="spec"><strong>190 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$115,000</div>
+          <button class="add-cart-btn " onclick="addToCart(93)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="Audi RS5 Sportback" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">RS5 Sportback</div>
+        <div class="car-specs">
+          <div class="spec"><strong>444</strong>HP</div>
+          <div class="spec"><strong>174 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$85,000</div>
+          <button class="add-cart-btn " onclick="addToCart(95)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="BMW M3 Competition" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-model">M3 Competition</div>
+        <div class="car-specs">
+          <div class="spec"><strong>503</strong>HP</div>
+          <div class="spec"><strong>180 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$85,000</div>
+          <button class="add-cart-btn " onclick="addToCart(97)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="BMW 8 Series Gran Coupe" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-model">8 Series Gran Coupe</div>
+        <div class="car-specs">
+          <div class="spec"><strong>335</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$95,000</div>
+          <button class="add-cart-btn " onclick="addToCart(100)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="Ferrari GTC4Lusso" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Ferrari</div>
+        <div class="car-model">GTC4Lusso</div>
+        <div class="car-specs">
+          <div class="spec"><strong>680</strong>HP</div>
+          <div class="spec"><strong>208 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$300,000</div>
+          <button class="add-cart-btn " onclick="addToCart(105)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="Maserati Ghibli Trofeo" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Maserati</div>
+        <div class="car-model">Ghibli Trofeo</div>
+        <div class="car-specs">
+          <div class="spec"><strong>580</strong>HP</div>
+          <div class="spec"><strong>203 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$120,000</div>
+          <button class="add-cart-btn " onclick="addToCart(111)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="Mercedes-Benz AMG GT 4-Door 63 S" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Mercedes-Benz</div>
+        <div class="car-model">AMG GT 4-Door 63 S</div>
+        <div class="car-specs">
+          <div class="spec"><strong>630</strong>HP</div>
+          <div class="spec"><strong>196 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$165,000</div>
+          <button class="add-cart-btn " onclick="addToCart(120)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="Rolls-Royce Phantom EWB" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Phantom EWB</div>
+        <div class="car-specs">
+          <div class="spec"><strong>563</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$560,000</div>
+          <button class="add-cart-btn " onclick="addToCart(126)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1617788138017-80ad40651399" alt="Rolls-Royce Ghost Series II" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Ghost Series II</div>
+        <div class="car-specs">
+          <div class="spec"><strong>563</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$365,000</div>
+          <button class="add-cart-btn " onclick="addToCart(127)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="Bentley Mulsanne Speed" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Bentley</div>
+        <div class="car-model">Mulsanne Speed</div>
+        <div class="car-specs">
+          <div class="spec"><strong>537</strong>HP</div>
+          <div class="spec"><strong>190 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$370,000</div>
+          <button class="add-cart-btn " onclick="addToCart(134)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1551830820-330a71b99659" alt="Rolls-Royce Silver Shadow" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Silver Shadow</div>
+        <div class="car-specs">
+          <div class="spec"><strong>563</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$300,000</div>
+          <button class="add-cart-btn " onclick="addToCart(142)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1551830820-330a71b99659" alt="Audi A7 Sportback" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">A7 Sportback</div>
+        <div class="car-specs">
+          <div class="spec"><strong>335</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$75,000</div>
+          <button class="add-cart-btn " onclick="addToCart(145)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="Maserati Bora" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Maserati</div>
+        <div class="car-model">Bora</div>
+        <div class="car-specs">
+          <div class="spec"><strong>310</strong>HP</div>
+          <div class="spec"><strong>160 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$160,000</div>
+          <button class="add-cart-btn " onclick="addToCart(164)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="Aston Martin Rapide AMR" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Aston Martin</div>
+        <div class="car-model">Rapide AMR</div>
+        <div class="car-specs">
+          <div class="spec"><strong>558</strong>HP</div>
+          <div class="spec"><strong>203 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$210,000</div>
+          <button class="add-cart-btn " onclick="addToCart(170)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1503376780353-7e6692767b70" alt="Audi S8 Plus" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">S8 Plus</div>
+        <div class="car-specs">
+          <div class="spec"><strong>571</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$118,000</div>
+          <button class="add-cart-btn " onclick="addToCart(171)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="Rolls-Royce Silver Seraph" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Silver Seraph</div>
+        <div class="car-specs">
+          <div class="spec"><strong>322</strong>HP</div>
+          <div class="spec"><strong>140 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$280,000</div>
+          <button class="add-cart-btn " onclick="addToCart(181)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1544636331-e26879cd4d9b" alt="Aston Martin Lagonda Taraf" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Aston Martin</div>
+        <div class="car-model">Lagonda Taraf</div>
+        <div class="car-specs">
+          <div class="spec"><strong>540</strong>HP</div>
+          <div class="spec"><strong>195 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$1.0M</div>
+          <button class="add-cart-btn " onclick="addToCart(183)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1606664515524-ed2f786a0bd6" alt="BMW M760i" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-model">M760i</div>
+        <div class="car-specs">
+          <div class="spec"><strong>601</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$165,000</div>
+          <button class="add-cart-btn " onclick="addToCart(185)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1555215695-3004980ad54e" alt="Rolls-Royce Boat Tail" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Rolls-Royce</div>
+        <div class="car-model">Boat Tail</div>
+        <div class="car-specs">
+          <div class="spec"><strong>563</strong>HP</div>
+          <div class="spec"><strong>155 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$28.0M</div>
+          <button class="add-cart-btn " onclick="addToCart(194)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1580273916550-e323be2ae537" alt="Audi RS3 Sportback" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">Audi</div>
+        <div class="car-model">RS3 Sportback</div>
+        <div class="car-specs">
+          <div class="spec"><strong>394</strong>HP</div>
+          <div class="spec"><strong>174 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$65,000</div>
+          <button class="add-cart-btn " onclick="addToCart(197)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="./LUXE MOTORS — Collection_files/photo-1619405399517-d7fce0f13302" alt="BMW Alpina B7" onerror="this.src=&#39;https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&amp;q=80&#39;">
+        <span class="car-category-badge badge-sedan">SEDAN</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">BMW</div>
+        <div class="car-model">Alpina B7</div>
+        <div class="car-specs">
+          <div class="spec"><strong>630</strong>HP</div>
+          <div class="spec"><strong>205 mph</strong>TOP SPEED</div>
+          <div class="spec"><strong>2024</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">$145,000</div>
+          <button class="add-cart-btn " onclick="addToCart(198)">
+            + SELECT
+          </button>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2>YOUR SELECTION</h2>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty-msg">Your selection is empty.<br>Browse our collection below.</div></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>TOTAL</span>
+      <strong id="cartTotal">$0</strong>
+    </div>
+    <button class="checkout-btn">ENQUIRE NOW</button>
+  </div>
+</div>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close-top" onclick="closeAuthModal()">✕</button>
+    <h2 id="modalTitle">SIGN IN</h2>
+    <div class="modal-gold-line"></div>
+    <p id="modalSubtitle">ACCESS YOUR EXCLUSIVE ACCOUNT</p>
+    <div class="modal-notice" id="cartNotice" style="display:none">
+      🛒 Your cart will be saved after signing in
+    </div>
+    <div class="form-field">
+      <label>EMAIL ADDRESS</label>
+      <input type="email" id="authEmail" placeholder="your@email.com">
+    </div>
+    <div class="form-field">
+      <label>PASSWORD</label>
+      <input type="password" id="authPassword" placeholder="••••••••">
+    </div>
+    <div class="form-field" id="nameField" style="display:none">
+      <label>FULL NAME</label>
+      <input type="text" id="authName" placeholder="Your name">
+    </div>
+    <button class="modal-submit" id="authSubmitBtn" onclick="handleAuth()">SIGN IN</button>
+    <div class="modal-toggle">
+      <span id="modalToggleText">Don't have an account?</span>
+      <a onclick="toggleAuthMode()"> <span id="modalToggleLink">Register</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA — 200 CARS
+// ============================================================
+const CARS = [
+  { id:1, brand:"Aston Martin", model:"DB12", category:"sport", price:245000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:671,speed:"202 mph",engine:"4.0L V8"} },
+  { id:2, brand:"Aston Martin", model:"Vantage", category:"sport", price:189000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:503,speed:"195 mph",engine:"4.0L V8"} },
+  { id:3, brand:"Aston Martin", model:"DBX707", category:"suv", price:235000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:707,speed:"193 mph",engine:"4.0L V8"} },
+  { id:4, brand:"Aston Martin", model:"DBS 770", category:"sport", price:340000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:770,speed:"211 mph",engine:"5.2L V12"} },
+  { id:5, brand:"Aston Martin", model:"Valkyrie", category:"sport", price:3000000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:1160,speed:"250 mph",engine:"6.5L V12"} },
+  { id:6, brand:"Aston Martin", model:"Vanquish", category:"sedan", price:290000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:824,speed:"214 mph",engine:"5.2L V12"} },
+  { id:7, brand:"Audi", model:"R8 V10", category:"sport", price:165000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:602,speed:"205 mph",engine:"5.2L V10"} },
+  { id:8, brand:"Audi", model:"RS e-tron GT", category:"electric", price:142000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:637,speed:"155 mph",engine:"Electric"} },
+  { id:9, brand:"Audi", model:"Q8 e-tron", category:"electric", price:74000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:402,speed:"124 mph",engine:"Electric"} },
+  { id:10, brand:"Audi", model:"RS7 Sportback", category:"sedan", price:120000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:591,speed:"190 mph",engine:"4.0L V8"} },
+  { id:11, brand:"Audi", model:"SQ8", category:"suv", price:99000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:500,speed:"155 mph",engine:"4.0L V8"} },
+  { id:12, brand:"Audi", model:"A8 L", category:"sedan", price:95000, year:2024, img:"https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80", specs:{hp:335,speed:"155 mph",engine:"3.0L V6"} },
+  { id:13, brand:"Audi", model:"e-tron S", category:"electric", price:85000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:496,speed:"130 mph",engine:"Electric"} },
+  { id:14, brand:"Audi", model:"RS Q8", category:"suv", price:130000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:591,speed:"190 mph",engine:"4.0L V8"} },
+  { id:15, brand:"BMW", model:"M8 Competition", category:"sport", price:145000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:617,speed:"190 mph",engine:"4.4L V8"} },
+  { id:16, brand:"BMW", model:"iX M60", category:"electric", price:109000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:610,speed:"155 mph",engine:"Electric"} },
+  { id:17, brand:"BMW", model:"7 Series", category:"sedan", price:96000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:536,speed:"155 mph",engine:"4.4L V8"} },
+  { id:18, brand:"BMW", model:"XM", category:"suv", price:160000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:644,speed:"155 mph",engine:"4.4L V8 Hybrid"} },
+  { id:19, brand:"BMW", model:"M5", category:"sedan", price:110000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:617,speed:"190 mph",engine:"4.4L V8"} },
+  { id:20, brand:"BMW", model:"i7 M70", category:"electric", price:185000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:650,speed:"155 mph",engine:"Electric"} },
+  { id:21, brand:"BMW", model:"X7 M60i", category:"suv", price:115000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:523,speed:"155 mph",engine:"4.4L V8"} },
+  { id:22, brand:"BMW", model:"M4 CSL", category:"sport", price:140000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:543,speed:"188 mph",engine:"3.0L I6"} },
+  { id:23, brand:"Bentley", model:"Continental GT", category:"sport", price:235000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:659,speed:"208 mph",engine:"6.0L W12"} },
+  { id:24, brand:"Bentley", model:"Bentayga EWB", category:"suv", price:240000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:542,speed:"180 mph",engine:"4.0L V8"} },
+  { id:25, brand:"Bentley", model:"Flying Spur", category:"sedan", price:220000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:626,speed:"207 mph",engine:"6.0L W12"} },
+  { id:26, brand:"Bentley", model:"Mulliner Bacalar", category:"sport", price:1900000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:659,speed:"208 mph",engine:"6.0L W12"} },
+  { id:27, brand:"Bentley", model:"Bentayga Hybrid", category:"electric", price:190000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:443,speed:"158 mph",engine:"2.9L V6 Hybrid"} },
+  { id:28, brand:"Bentley", model:"Flying Spur Hybrid", category:"electric", price:225000, year:2024, img:"https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80", specs:{hp:536,speed:"177 mph",engine:"2.9L V6 Hybrid"} },
+  { id:29, brand:"Ferrari", model:"SF90 Stradale", category:"sport", price:625000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:986,speed:"211 mph",engine:"4.0L V8 Hybrid"} },
+  { id:30, brand:"Ferrari", model:"296 GTB", category:"sport", price:325000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:830,speed:"205 mph",engine:"3.0L V6 Hybrid"} },
+  { id:31, brand:"Ferrari", model:"Roma", category:"sedan", price:225000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:612,speed:"199 mph",engine:"3.9L V8"} },
+  { id:32, brand:"Ferrari", model:"Purosangue", category:"suv", price:395000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:715,speed:"193 mph",engine:"6.5L V12"} },
+  { id:33, brand:"Ferrari", model:"812 Competizione", category:"sport", price:650000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:830,speed:"211 mph",engine:"6.5L V12"} },
+  { id:34, brand:"Ferrari", model:"488 Pista", category:"sport", price:350000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:710,speed:"211 mph",engine:"3.9L V8"} },
+  { id:35, brand:"Ferrari", model:"LaFerrari Aperta", category:"sport", price:5000000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:949,speed:"217 mph",engine:"6.3L V12 Hybrid"} },
+  { id:36, brand:"Lamborghini", model:"Huracán STO", category:"sport", price:330000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:631,speed:"200 mph",engine:"5.2L V10"} },
+  { id:37, brand:"Lamborghini", model:"Urus S", category:"suv", price:250000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:666,speed:"190 mph",engine:"4.0L V8"} },
+  { id:38, brand:"Lamborghini", model:"Revuelto", category:"sport", price:600000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:1001,speed:"217 mph",engine:"6.5L V12 Hybrid"} },
+  { id:39, brand:"Lamborghini", model:"Urus Performante", category:"suv", price:285000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:666,speed:"193 mph",engine:"4.0L V8"} },
+  { id:40, brand:"Lamborghini", model:"Sián FKP 37", category:"sport", price:3600000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:819,speed:"217 mph",engine:"6.5L V12 Hybrid"} },
+  { id:41, brand:"Lamborghini", model:"Huracán EVO", category:"sport", price:260000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:631,speed:"202 mph",engine:"5.2L V10"} },
+  { id:42, brand:"Land Rover", model:"Range Rover SV", category:"suv", price:280000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:530,speed:"155 mph",engine:"4.4L V8"} },
+  { id:43, brand:"Land Rover", model:"Defender 130", category:"suv", price:80000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:395,speed:"130 mph",engine:"3.0L I6"} },
+  { id:44, brand:"Land Rover", model:"Range Rover Sport", category:"suv", price:120000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:523,speed:"155 mph",engine:"4.4L V8"} },
+  { id:45, brand:"Land Rover", model:"Range Rover Electric", category:"electric", price:145000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:493,speed:"130 mph",engine:"Electric"} },
+  { id:46, brand:"Land Rover", model:"Discovery SVX", category:"suv", price:90000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:355,speed:"130 mph",engine:"3.0L I6"} },
+  { id:47, brand:"Land Rover", model:"Range Rover P530", category:"suv", price:175000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:530,speed:"155 mph",engine:"4.4L V8"} },
+  { id:48, brand:"Maserati", model:"MC20", category:"sport", price:215000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:621,speed:"202 mph",engine:"3.0L V6"} },
+  { id:49, brand:"Maserati", model:"MC20 Cielo", category:"sport", price:265000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:621,speed:"199 mph",engine:"3.0L V6"} },
+  { id:50, brand:"Maserati", model:"Levante Trofeo", category:"suv", price:170000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:580,speed:"187 mph",engine:"3.8L V8"} },
+  { id:51, brand:"Maserati", model:"GranTurismo", category:"sport", price:185000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:542,speed:"197 mph",engine:"3.0L V6"} },
+  { id:52, brand:"Maserati", model:"GranTurismo Folgore", category:"electric", price:220000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:761,speed:"199 mph",engine:"Electric"} },
+  { id:53, brand:"Maserati", model:"Quattroporte", category:"sedan", price:140000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:580,speed:"202 mph",engine:"3.8L V8"} },
+  { id:54, brand:"Maserati", model:"Grecale Folgore", category:"electric", price:110000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:557,speed:"150 mph",engine:"Electric"} },
+  { id:55, brand:"McLaren", model:"750S", category:"sport", price:325000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:740,speed:"206 mph",engine:"4.0L V8"} },
+  { id:56, brand:"McLaren", model:"Artura", category:"sport", price:237000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:671,speed:"205 mph",engine:"3.0L V6 Hybrid"} },
+  { id:57, brand:"McLaren", model:"750S Spider", category:"sport", price:358000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:740,speed:"204 mph",engine:"4.0L V8"} },
+  { id:58, brand:"McLaren", model:"Senna", category:"sport", price:1000000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:789,speed:"211 mph",engine:"4.0L V8"} },
+  { id:59, brand:"McLaren", model:"720S", category:"sport", price:300000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:710,speed:"212 mph",engine:"4.0L V8"} },
+  { id:60, brand:"McLaren", model:"Elva", category:"sport", price:1700000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:804,speed:"200 mph",engine:"4.0L V8"} },
+  { id:61, brand:"Mercedes-Benz", model:"AMG GT 63", category:"sport", price:165000, year:2024, img:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", specs:{hp:630,speed:"197 mph",engine:"4.0L V8"} },
+  { id:62, brand:"Mercedes-Benz", model:"EQS 580", category:"electric", price:130000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:516,speed:"130 mph",engine:"Electric"} },
+  { id:63, brand:"Mercedes-Benz", model:"S-Class S680", category:"sedan", price:285000, year:2024, img:"https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80", specs:{hp:612,speed:"155 mph",engine:"6.0L V12"} },
+  { id:64, brand:"Mercedes-Benz", model:"GLS 63 AMG", category:"suv", price:175000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:603,speed:"174 mph",engine:"4.0L V8"} },
+  { id:65, brand:"Mercedes-Benz", model:"AMG ONE", category:"sport", price:2700000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:1063,speed:"219 mph",engine:"1.6L F1 Hybrid"} },
+  { id:66, brand:"Mercedes-Benz", model:"EQE SUV", category:"electric", price:80000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:402,speed:"130 mph",engine:"Electric"} },
+  { id:67, brand:"Mercedes-Benz", model:"G 63 AMG", category:"suv", price:185000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:577,speed:"149 mph",engine:"4.0L V8"} },
+  { id:68, brand:"Mercedes-Benz", model:"AMG GT R", category:"sport", price:175000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:577,speed:"198 mph",engine:"4.0L V8"} },
+  { id:69, brand:"Mercedes-Benz", model:"Maybach S 680", category:"sedan", price:215000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:621,speed:"155 mph",engine:"6.0L V12"} },
+  { id:70, brand:"Mercedes-Benz", model:"EQS SUV 580", category:"electric", price:110000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:536,speed:"130 mph",engine:"Electric"} },
+  { id:71, brand:"Porsche", model:"911 GT3 RS", category:"sport", price:225000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:518,speed:"184 mph",engine:"4.0L Flat-6"} },
+  { id:72, brand:"Porsche", model:"Taycan Turbo S", category:"electric", price:185000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:750,speed:"162 mph",engine:"Electric"} },
+  { id:73, brand:"Porsche", model:"Cayenne Turbo GT", category:"suv", price:185000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:631,speed:"186 mph",engine:"4.0L V8"} },
+  { id:74, brand:"Porsche", model:"Panamera Turbo S", category:"sedan", price:195000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:620,speed:"196 mph",engine:"4.0L V8"} },
+  { id:75, brand:"Porsche", model:"918 Spyder", category:"sport", price:1700000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:887,speed:"214 mph",engine:"4.6L V8 Hybrid"} },
+  { id:76, brand:"Porsche", model:"Taycan Cross Turismo", category:"electric", price:110000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:670,speed:"155 mph",engine:"Electric"} },
+  { id:77, brand:"Porsche", model:"Macan EV", category:"electric", price:80000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:402,speed:"137 mph",engine:"Electric"} },
+  { id:78, brand:"Porsche", model:"911 Turbo S Cabriolet", category:"sport", price:230000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:650,speed:"205 mph",engine:"3.8L Flat-6"} },
+  { id:79, brand:"Rolls-Royce", model:"Ghost", category:"sedan", price:335000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:80, brand:"Rolls-Royce", model:"Phantom", category:"sedan", price:455000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:81, brand:"Rolls-Royce", model:"Cullinan", category:"suv", price:345000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:82, brand:"Rolls-Royce", model:"Spectre", category:"electric", price:420000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:577,speed:"155 mph",engine:"Electric"} },
+  { id:83, brand:"Rolls-Royce", model:"Wraith", category:"sport", price:330000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:624,speed:"155 mph",engine:"6.6L V12"} },
+  { id:84, brand:"Rolls-Royce", model:"Dawn", category:"sport", price:360000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.6L V12"} },
+  { id:85, brand:"Rolls-Royce", model:"Ghost Black Badge", category:"sedan", price:380000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:591,speed:"155 mph",engine:"6.75L V12"} },
+  { id:86, brand:"Tesla", model:"Model S Plaid", category:"electric", price:109000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:1020,speed:"200 mph",engine:"Electric"} },
+  { id:87, brand:"Tesla", model:"Model X Plaid", category:"electric", price:108000, year:2024, img:"https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80", specs:{hp:1020,speed:"163 mph",engine:"Electric"} },
+  { id:88, brand:"Tesla", model:"Roadster", category:"electric", price:250000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:1000,speed:"250 mph",engine:"Electric"} },
+  { id:89, brand:"Tesla", model:"Cybertruck", category:"suv", price:80000, year:2024, img:"https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80", specs:{hp:845,speed:"130 mph",engine:"Electric"} },
+  { id:90, brand:"Tesla", model:"Model 3 Performance", category:"electric", price:53000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:455,speed:"162 mph",engine:"Electric"} },
+  { id:91, brand:"Aston Martin", model:"Valhalla", category:"sport", price:800000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:937,speed:"217 mph",engine:"4.0L V8 Hybrid"} },
+  { id:92, brand:"Aston Martin", model:"DB11 AMR", category:"sport", price:235000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:630,speed:"208 mph",engine:"5.2L V12"} },
+  { id:93, brand:"Audi", model:"RS6 Avant", category:"sedan", price:115000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:591,speed:"190 mph",engine:"4.0L V8"} },
+  { id:94, brand:"Audi", model:"Q7 e-tron", category:"electric", price:72000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:374,speed:"140 mph",engine:"Hybrid"} },
+  { id:95, brand:"Audi", model:"RS5 Sportback", category:"sedan", price:85000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:444,speed:"174 mph",engine:"2.9L V6"} },
+  { id:96, brand:"Audi", model:"e-tron GT", category:"electric", price:104000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:469,speed:"152 mph",engine:"Electric"} },
+  { id:97, brand:"BMW", model:"M3 Competition", category:"sedan", price:85000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:503,speed:"180 mph",engine:"3.0L I6"} },
+  { id:98, brand:"BMW", model:"i4 M50", category:"electric", price:76000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:536,speed:"140 mph",engine:"Electric"} },
+  { id:99, brand:"BMW", model:"X5 M Competition", category:"suv", price:115000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:617,speed:"177 mph",engine:"4.4L V8"} },
+  { id:100, brand:"BMW", model:"8 Series Gran Coupe", category:"sedan", price:95000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:335,speed:"155 mph",engine:"3.0L I6"} },
+  { id:101, brand:"Bentley", model:"Continental GT Speed", category:"sport", price:285000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:650,speed:"208 mph",engine:"6.0L W12"} },
+  { id:102, brand:"Bentley", model:"Bentayga Speed", category:"suv", price:250000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:626,speed:"190 mph",engine:"6.0L W12"} },
+  { id:103, brand:"Ferrari", model:"F8 Tributo", category:"sport", price:280000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:710,speed:"211 mph",engine:"3.9L V8"} },
+  { id:104, brand:"Ferrari", model:"Portofino M", category:"sport", price:225000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:612,speed:"199 mph",engine:"3.9L V8"} },
+  { id:105, brand:"Ferrari", model:"GTC4Lusso", category:"sedan", price:300000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:680,speed:"208 mph",engine:"6.3L V12"} },
+  { id:106, brand:"Ferrari", model:"Daytona SP3", category:"sport", price:2300000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:840,speed:"211 mph",engine:"6.5L V12"} },
+  { id:107, brand:"Lamborghini", model:"Aventador LP 780-4", category:"sport", price:500000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:769,speed:"218 mph",engine:"6.5L V12"} },
+  { id:108, brand:"Lamborghini", model:"Urus Pearl Capsule", category:"suv", price:230000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:641,speed:"189 mph",engine:"4.0L V8"} },
+  { id:109, brand:"Land Rover", model:"Range Rover Velar SVA", category:"suv", price:90000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:550,speed:"155 mph",engine:"5.0L V8"} },
+  { id:110, brand:"Land Rover", model:"Defender V8", category:"suv", price:100000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:518,speed:"149 mph",engine:"5.0L V8"} },
+  { id:111, brand:"Maserati", model:"Ghibli Trofeo", category:"sedan", price:120000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:580,speed:"203 mph",engine:"3.8L V8"} },
+  { id:112, brand:"Maserati", model:"MC20 Folgore", category:"electric", price:290000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:761,speed:"199 mph",engine:"Electric"} },
+  { id:113, brand:"McLaren", model:"600LT Spider", category:"sport", price:256000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:592,speed:"196 mph",engine:"3.8L V8"} },
+  { id:114, brand:"McLaren", model:"GT", category:"sport", price:210000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:612,speed:"203 mph",engine:"4.0L V8"} },
+  { id:115, brand:"Mercedes-Benz", model:"AMG SL 63", category:"sport", price:175000, year:2024, img:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", specs:{hp:577,speed:"196 mph",engine:"4.0L V8"} },
+  { id:116, brand:"Mercedes-Benz", model:"C 63 S E Performance", category:"electric", price:90000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:671,speed:"174 mph",engine:"2.0L Hybrid"} },
+  { id:117, brand:"Mercedes-Benz", model:"GLE 63 S AMG", category:"suv", price:120000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:603,speed:"174 mph",engine:"4.0L V8"} },
+  { id:118, brand:"Mercedes-Benz", model:"EQC 400", category:"electric", price:68000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:402,speed:"112 mph",engine:"Electric"} },
+  { id:119, brand:"Mercedes-Benz", model:"Maybach GLS 600", category:"suv", price:185000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:550,speed:"155 mph",engine:"4.0L V8"} },
+  { id:120, brand:"Mercedes-Benz", model:"AMG GT 4-Door 63 S", category:"sedan", price:165000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:630,speed:"196 mph",engine:"4.0L V8"} },
+  { id:121, brand:"Porsche", model:"Cayenne Turbo S E-Hybrid", category:"electric", price:190000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:729,speed:"183 mph",engine:"4.0L V8 Hybrid"} },
+  { id:122, brand:"Porsche", model:"Panamera 4S E-Hybrid", category:"electric", price:120000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:552,speed:"183 mph",engine:"2.9L V6 Hybrid"} },
+  { id:123, brand:"Porsche", model:"911 Carrera GTS", category:"sport", price:145000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:473,speed:"194 mph",engine:"3.0L Flat-6"} },
+  { id:124, brand:"Porsche", model:"Cayenne GTS", category:"suv", price:130000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:473,speed:"168 mph",engine:"4.0L V8"} },
+  { id:125, brand:"Rolls-Royce", model:"Cullinan Black Badge", category:"suv", price:430000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:591,speed:"155 mph",engine:"6.75L V12"} },
+  { id:126, brand:"Rolls-Royce", model:"Phantom EWB", category:"sedan", price:560000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:127, brand:"Rolls-Royce", model:"Ghost Series II", category:"sedan", price:365000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:128, brand:"Tesla", model:"Model Y Performance", category:"electric", price:58000, year:2024, img:"https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80", specs:{hp:456,speed:"155 mph",engine:"Electric"} },
+  { id:129, brand:"Tesla", model:"Semi", category:"electric", price:150000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:1000,speed:"65 mph",engine:"Electric"} },
+  { id:130, brand:"Tesla", model:"Model S Long Range", category:"electric", price:89000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:670,speed:"155 mph",engine:"Electric"} },
+  { id:131, brand:"Aston Martin", model:"V12 Vantage", category:"sport", price:380000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:700,speed:"200 mph",engine:"5.2L V12"} },
+  { id:132, brand:"Audi", model:"TT RS Roadster", category:"sport", price:72000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:394,speed:"155 mph",engine:"2.5L I5"} },
+  { id:133, brand:"BMW", model:"Z4 M40i", category:"sport", price:65000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:382,speed:"155 mph",engine:"3.0L I6"} },
+  { id:134, brand:"Bentley", model:"Mulsanne Speed", category:"sedan", price:370000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:537,speed:"190 mph",engine:"6.75L V8"} },
+  { id:135, brand:"Ferrari", model:"SP3 Daytona", category:"sport", price:2200000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:840,speed:"211 mph",engine:"6.5L V12"} },
+  { id:136, brand:"Lamborghini", model:"Centenario Roadster", category:"sport", price:2500000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:759,speed:"217 mph",engine:"6.5L V12"} },
+  { id:137, brand:"Land Rover", model:"Range Rover Sport SVR", category:"suv", price:115000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:575,speed:"176 mph",engine:"5.0L V8"} },
+  { id:138, brand:"Maserati", model:"GranCabrio Folgore", category:"electric", price:195000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:761,speed:"186 mph",engine:"Electric"} },
+  { id:139, brand:"McLaren", model:"P1 GTR", category:"sport", price:3000000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:986,speed:"225 mph",engine:"3.8L V8 Hybrid"} },
+  { id:140, brand:"Mercedes-Benz", model:"SLS AMG", category:"sport", price:215000, year:2024, img:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", specs:{hp:563,speed:"197 mph",engine:"6.2L V8"} },
+  { id:141, brand:"Porsche", model:"Spyder RS", category:"sport", price:185000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:500,speed:"186 mph",engine:"4.0L Flat-6"} },
+  { id:142, brand:"Rolls-Royce", model:"Silver Shadow", category:"sedan", price:300000, year:2024, img:"https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:143, brand:"Tesla", model:"Cyberbeast", category:"electric", price:100000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:845,speed:"130 mph",engine:"Electric"} },
+  { id:144, brand:"Aston Martin", model:"DBX S", category:"suv", price:190000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:542,speed:"181 mph",engine:"4.0L V8"} },
+  { id:145, brand:"Audi", model:"A7 Sportback", category:"sedan", price:75000, year:2024, img:"https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80", specs:{hp:335,speed:"155 mph",engine:"3.0L V6"} },
+  { id:146, brand:"BMW", model:"M2", category:"sport", price:63000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:453,speed:"155 mph",engine:"3.0L I6"} },
+  { id:147, brand:"Bentley", model:"Continental GTC", category:"sport", price:250000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:542,speed:"198 mph",engine:"4.0L V8"} },
+  { id:148, brand:"Ferrari", model:"California T", category:"sport", price:200000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:553,speed:"196 mph",engine:"3.9L V8"} },
+  { id:149, brand:"Lamborghini", model:"Gallardo", category:"sport", price:220000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:562,speed:"201 mph",engine:"5.2L V10"} },
+  { id:150, brand:"Land Rover", model:"Discovery Sport P300e", category:"electric", price:55000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:309,speed:"130 mph",engine:"Hybrid"} },
+  { id:151, brand:"Maserati", model:"MC12", category:"sport", price:850000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:621,speed:"205 mph",engine:"6.0L V12"} },
+  { id:152, brand:"McLaren", model:"570S", category:"sport", price:195000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:562,speed:"204 mph",engine:"3.8L V8"} },
+  { id:153, brand:"Mercedes-Benz", model:"GLB 250", category:"suv", price:50000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:221,speed:"130 mph",engine:"2.0L I4"} },
+  { id:154, brand:"Porsche", model:"Cayman GT4", category:"sport", price:100000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:414,speed:"188 mph",engine:"4.0L Flat-6"} },
+  { id:155, brand:"Rolls-Royce", model:"Phantom Drophead", category:"sport", price:520000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:453,speed:"149 mph",engine:"6.75L V12"} },
+  { id:156, brand:"Tesla", model:"Model 3 Highland", category:"electric", price:42000, year:2024, img:"https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80", specs:{hp:358,speed:"140 mph",engine:"Electric"} },
+  { id:157, brand:"Aston Martin", model:"One-77", category:"sport", price:1800000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:750,speed:"220 mph",engine:"7.3L V12"} },
+  { id:158, brand:"Audi", model:"Q5 Sportback e-tron", category:"electric", price:62000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:295,speed:"124 mph",engine:"Electric"} },
+  { id:159, brand:"BMW", model:"X6 M Competition", category:"suv", price:120000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:617,speed:"177 mph",engine:"4.4L V8"} },
+  { id:160, brand:"Bentley", model:"Bentayga V8", category:"suv", price:180000, year:2024, img:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80", specs:{hp:542,speed:"180 mph",engine:"4.0L V8"} },
+  { id:161, brand:"Ferrari", model:"Monza SP2", category:"sport", price:1800000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:810,speed:"186 mph",engine:"6.5L V12"} },
+  { id:162, brand:"Lamborghini", model:"Diablo GT", category:"sport", price:750000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:575,speed:"209 mph",engine:"6.0L V12"} },
+  { id:163, brand:"Land Rover", model:"Range Rover Autobiography", category:"suv", price:165000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:523,speed:"155 mph",engine:"4.4L V8"} },
+  { id:164, brand:"Maserati", model:"Bora", category:"sedan", price:160000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:310,speed:"160 mph",engine:"4.7L V8"} },
+  { id:165, brand:"McLaren", model:"Speedtail", category:"sport", price:2100000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:1070,speed:"250 mph",engine:"4.0L V8 Hybrid"} },
+  { id:166, brand:"Mercedes-Benz", model:"AMG GT Black Series", category:"sport", price:335000, year:2024, img:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", specs:{hp:720,speed:"202 mph",engine:"4.0L V8"} },
+  { id:167, brand:"Porsche", model:"GT2 RS", category:"sport", price:290000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:700,speed:"211 mph",engine:"3.8L Flat-6"} },
+  { id:168, brand:"Rolls-Royce", model:"Wraith Black Badge", category:"sport", price:390000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:624,speed:"155 mph",engine:"6.6L V12"} },
+  { id:169, brand:"Tesla", model:"Model X Long Range", category:"electric", price:88000, year:2024, img:"https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80", specs:{hp:670,speed:"155 mph",engine:"Electric"} },
+  { id:170, brand:"Aston Martin", model:"Rapide AMR", category:"sedan", price:210000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:558,speed:"203 mph",engine:"6.0L V12"} },
+  { id:171, brand:"Audi", model:"S8 Plus", category:"sedan", price:118000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:571,speed:"155 mph",engine:"4.0L V8"} },
+  { id:172, brand:"BMW", model:"i8 Roadster", category:"electric", price:150000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:374,speed:"155 mph",engine:"Hybrid"} },
+  { id:173, brand:"Bentley", model:"Azure T", category:"sport", price:310000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:450,speed:"178 mph",engine:"6.75L V8"} },
+  { id:174, brand:"Ferrari", model:"550 Maranello", category:"sport", price:320000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:485,speed:"199 mph",engine:"5.5L V12"} },
+  { id:175, brand:"Lamborghini", model:"Murcielago LP 670", category:"sport", price:420000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:670,speed:"212 mph",engine:"6.5L V12"} },
+  { id:176, brand:"Land Rover", model:"Freelander SE", category:"suv", price:45000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:237,speed:"125 mph",engine:"2.0L I4"} },
+  { id:177, brand:"Maserati", model:"3200 GT", category:"sport", price:90000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:370,speed:"175 mph",engine:"3.2L V8"} },
+  { id:178, brand:"McLaren", model:"F1", category:"sport", price:20000000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:627,speed:"240 mph",engine:"6.1L V12"} },
+  { id:179, brand:"Mercedes-Benz", model:"CLK GTR", category:"sport", price:1500000, year:2024, img:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", specs:{hp:604,speed:"199 mph",engine:"6.0L V12"} },
+  { id:180, brand:"Porsche", model:"Carrera GT", category:"sport", price:700000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:605,speed:"205 mph",engine:"5.7L V10"} },
+  { id:181, brand:"Rolls-Royce", model:"Silver Seraph", category:"sedan", price:280000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:322,speed:"140 mph",engine:"5.4L V12"} },
+  { id:182, brand:"Tesla", model:"Model 2", category:"electric", price:28000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:250,speed:"120 mph",engine:"Electric"} },
+  { id:183, brand:"Aston Martin", model:"Lagonda Taraf", category:"sedan", price:1000000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:540,speed:"195 mph",engine:"5.9L V12"} },
+  { id:184, brand:"Audi", model:"Q4 e-tron", category:"electric", price:52000, year:2024, img:"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", specs:{hp:295,speed:"112 mph",engine:"Electric"} },
+  { id:185, brand:"BMW", model:"M760i", category:"sedan", price:165000, year:2024, img:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80", specs:{hp:601,speed:"155 mph",engine:"6.6L V12"} },
+  { id:186, brand:"Bentley", model:"Corniche", category:"sport", price:340000, year:2024, img:"https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80", specs:{hp:420,speed:"165 mph",engine:"6.75L V8"} },
+  { id:187, brand:"Ferrari", model:"Testarossa", category:"sport", price:450000, year:2024, img:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", specs:{hp:390,speed:"181 mph",engine:"4.9L Flat-12"} },
+  { id:188, brand:"Lamborghini", model:"Countach LPI 800-4", category:"sport", price:2640000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:803,speed:"221 mph",engine:"6.5L V12 Hybrid"} },
+  { id:189, brand:"Land Rover", model:"Range Rover Evoque", category:"suv", price:48000, year:2024, img:"https://images.unsplash.com/photo-1616455579100-2ceaa4ec2d37?w=800&q=80", specs:{hp:246,speed:"135 mph",engine:"2.0L I4"} },
+  { id:190, brand:"Maserati", model:"GranSport", category:"sport", price:110000, year:2024, img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", specs:{hp:400,speed:"177 mph",engine:"4.2L V8"} },
+  { id:191, brand:"McLaren", model:"MP4-12C", category:"sport", price:240000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:592,speed:"205 mph",engine:"3.8L V8"} },
+  { id:192, brand:"Mercedes-Benz", model:"300 SL Gullwing", category:"sport", price:1200000, year:2024, img:"https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", specs:{hp:215,speed:"163 mph",engine:"3.0L I6"} },
+  { id:193, brand:"Porsche", model:"959", category:"sport", price:1400000, year:2024, img:"https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", specs:{hp:444,speed:"197 mph",engine:"2.8L Flat-6"} },
+  { id:194, brand:"Rolls-Royce", model:"Boat Tail", category:"sedan", price:28000000, year:2024, img:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", specs:{hp:563,speed:"155 mph",engine:"6.75L V12"} },
+  { id:195, brand:"Tesla", model:"Roadster SpaceX Edition", category:"electric", price:350000, year:2024, img:"https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80", specs:{hp:1400,speed:"250 mph",engine:"Electric"} },
+  { id:196, brand:"Aston Martin", model:"Virage", category:"sport", price:195000, year:2024, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", specs:{hp:490,speed:"186 mph",engine:"6.0L V12"} },
+  { id:197, brand:"Audi", model:"RS3 Sportback", category:"sedan", price:65000, year:2024, img:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", specs:{hp:394,speed:"174 mph",engine:"2.5L I5"} },
+  { id:198, brand:"BMW", model:"Alpina B7", category:"sedan", price:145000, year:2024, img:"https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", specs:{hp:630,speed:"205 mph",engine:"4.4L V8"} },
+  { id:199, brand:"Ferrari", model:"SF90 Spider", category:"sport", price:700000, year:2024, img:"https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", specs:{hp:986,speed:"211 mph",engine:"4.0L V8 Hybrid"} },
+  { id:200, brand:"Lamborghini", model:"Essenza SCV12", category:"sport", price:2700000, year:2024, img:"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80", specs:{hp:830,speed:"186 mph",engine:"6.5L V12"} },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let cart = [];
+let currentUser = null;
+let guestCart = []; // holds cart items before auth
+let activeCategory = 'all';
+let activeBrand = 'all';
+let authMode = 'signin'; // 'signin' | 'register'
+let pendingCartItemId = null; // item user tried to add before signin
+
+// ============================================================
+// MOCK AUTH (replace with Supabase calls)
+// In your real app:
+//   supabase.auth.signInWithPassword({ email, password })
+//   supabase.auth.signUp({ email, password })
+//   supabase.auth.signOut()
+//   supabase.auth.onAuthStateChange(callback)
+//   After sign in: merge guestCart into user's DB cart
+// ============================================================
+const MOCK_USERS = {};
+
+function mockSignIn(email, password) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      const u = MOCK_USERS[email];
+      if (u && u.password === password) {
+        res({ user: { email, name: u.name, id: email } });
+      } else {
+        rej(new Error('Invalid credentials'));
+      }
+    }, 600);
+  });
+}
+
+function mockRegister(email, password, name) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      if (MOCK_USERS[email]) {
+        rej(new Error('Email already registered'));
+      } else {
+        MOCK_USERS[email] = { password, name, cart: [] };
+        res({ user: { email, name, id: email } });
+      }
+    }, 600);
+  });
+}
+
+// ============================================================
+// CART PERSISTENCE — GUEST → AUTH MERGE
+// This is the key logic: when user signs in or registers,
+// merge their guest cart into their account cart.
+// In Supabase, replace MOCK_USERS[email].cart with a DB upsert:
+//   await supabase.from('carts').upsert(guestCart.map(item => ({
+//     user_id: user.id,
+//     car_id: item.id,
+//     ...item
+//   })))
+// ============================================================
+function mergeGuestCartAfterAuth(user) {
+  if (guestCart.length === 0) return;
+  // Add all guest cart items to the authenticated cart
+  guestCart.forEach(item => {
+    if (!cart.find(c => c.id === item.id)) {
+      cart.push(item);
+    }
+  });
+  // Save to "user account" (mock)
+  if (MOCK_USERS[user.email]) {
+    MOCK_USERS[user.email].cart = [...cart];
+  }
+  guestCart = []; // clear guest cart after merge
+  showToast(`✓ ${cart.length} item${cart.length > 1 ? 's' : ''} saved to your account`, 'success');
+}
+
+function loadUserCart(user) {
+  // Load user's saved cart from mock store (in real app: fetch from Supabase)
+  const saved = MOCK_USERS[user.email]?.cart || [];
+  cart = [...saved];
+}
+
+// ============================================================
+// ADD TO CART
+// ============================================================
+function addToCart(carId) {
+  const car = CARS.find(c => c.id === carId);
+  if (!car) return;
+
+  if (!currentUser) {
+    // Not signed in — save to guestCart and trigger auth modal
+    if (!guestCart.find(c => c.id === carId)) {
+      guestCart.push(car);
+    }
+    pendingCartItemId = carId;
+    openAuthModal(true); // true = show cart notice
+    return;
+  }
+
+  if (cart.find(c => c.id === carId)) {
+    showToast('Already in your selection');
+    return;
+  }
+  cart.push(car);
+  // Persist to user account (in real app: upsert to Supabase)
+  if (MOCK_USERS[currentUser.email]) {
+    MOCK_USERS[currentUser.email].cart = [...cart];
+  }
+  updateCartUI();
+  showToast(`${car.brand} ${car.model} added to selection`, 'success');
+}
+
+function removeFromCart(carId) {
+  cart = cart.filter(c => c.id !== carId);
+  if (currentUser && MOCK_USERS[currentUser.email]) {
+    MOCK_USERS[currentUser.email].cart = [...cart];
+  }
+  updateCartUI();
+  renderCartItems();
+}
+
+// ============================================================
+// AUTH HANDLERS
+// ============================================================
+async function handleAuth() {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const name = document.getElementById('authName').value.trim();
+  const btn = document.getElementById('authSubmitBtn');
+
+  if (!email || !password) { showToast('Please fill all fields'); return; }
+
+  btn.textContent = authMode === 'signin' ? 'SIGNING IN...' : 'CREATING ACCOUNT...';
+  btn.disabled = true;
+
+  try {
+    let result;
+    if (authMode === 'signin') {
+      result = await mockSignIn(email, password);
+    } else {
+      if (!name) { showToast('Please enter your name'); btn.textContent = 'REGISTER'; btn.disabled = false; return; }
+      result = await mockRegister(email, password, name);
+    }
+
+    currentUser = result.user;
+
+    // Load user's existing cart first, then merge guest cart
+    loadUserCart(currentUser);
+    mergeGuestCartAfterAuth(currentUser);
+
+    updateAuthUI();
+    updateCartUI();
+    renderCars(); // refresh to update "in cart" button states
+    closeAuthModal();
+    showToast(`Welcome${authMode === 'register' ? '' : ' back'}, ${currentUser.name || email}!`, 'success');
+
+  } catch (err) {
+    showToast(err.message);
+  } finally {
+    btn.textContent = authMode === 'signin' ? 'SIGN IN' : 'REGISTER';
+    btn.disabled = false;
+  }
+}
+
+function signOut() {
+  currentUser = null;
+  cart = [];
+  guestCart = [];
+  updateAuthUI();
+  updateCartUI();
+  renderCars();
+  showToast('Signed out successfully');
+}
+
+// ============================================================
+// AUTH MODAL
+// ============================================================
+function openAuthModal(fromCart = false) {
+  document.getElementById('authModal').classList.add('open');
+  document.getElementById('cartNotice').style.display = fromCart ? 'block' : 'none';
+  document.getElementById('authEmail').value = '';
+  document.getElementById('authPassword').value = '';
+  document.getElementById('authName').value = '';
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('open');
+}
+
+function toggleAuthMode() {
+  authMode = authMode === 'signin' ? 'register' : 'signin';
+  const isRegister = authMode === 'register';
+  document.getElementById('modalTitle').textContent = isRegister ? 'REGISTER' : 'SIGN IN';
+  document.getElementById('modalSubtitle').textContent = isRegister ? 'CREATE YOUR EXCLUSIVE ACCOUNT' : 'ACCESS YOUR EXCLUSIVE ACCOUNT';
+  document.getElementById('authSubmitBtn').textContent = isRegister ? 'REGISTER' : 'SIGN IN';
+  document.getElementById('nameField').style.display = isRegister ? 'block' : 'none';
+  document.getElementById('modalToggleText').textContent = isRegister ? 'Already have an account?' : "Don't have an account?";
+  document.getElementById('modalToggleLink').textContent = isRegister ? 'Sign In' : 'Register';
+}
+
+// Click outside modal to close
+document.getElementById('authModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAuthModal();
+});
+
+// ============================================================
+// CART UI
+// ============================================================
+function toggleCart() {
+  const overlay = document.getElementById('cartOverlay');
+  const drawer = document.getElementById('cartDrawer');
+  overlay.classList.toggle('open');
+  drawer.classList.toggle('open');
+  if (drawer.classList.contains('open')) renderCartItems();
+}
+
+function renderCartItems() {
+  const el = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotal');
+
+  if (cart.length === 0) {
+    el.innerHTML = '<div class="cart-empty-msg">Your selection is empty.<br>Browse our collection below.</div>';
+    totalEl.textContent = '$0';
+    return;
+  }
+
+  el.innerHTML = cart.map(car => `
+    <div class="cart-item">
+      <img src="${car.img}" alt="${car.model}" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200&q=60'">
+      <div class="cart-item-info">
+        <div class="cart-item-brand">${car.brand.toUpperCase()}</div>
+        <div class="cart-item-model">${car.model}</div>
+        <div class="cart-item-price">${formatPrice(car.price)}</div>
+      </div>
+      <button class="remove-item" onclick="removeFromCart(${car.id})">✕</button>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((sum, c) => sum + c.price, 0);
+  totalEl.textContent = formatPrice(total);
+}
+
+function updateCartUI() {
+  const count = cart.length;
+  const badge = document.getElementById('cartCount');
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'flex' : 'none';
+  // Re-render if cart is open
+  const drawer = document.getElementById('cartDrawer');
+  if (drawer.classList.contains('open')) renderCartItems();
+}
+
+// ============================================================
+// AUTH AREA UI
+// ============================================================
+function updateAuthUI() {
+  const area = document.getElementById('authArea');
+  if (currentUser) {
+    area.innerHTML = `
+      <span class="user-badge">Welcome, <span>${currentUser.name || currentUser.email}</span></span>
+      <button class="auth-btn signout" onclick="signOut()">SIGN OUT</button>
+    `;
+  } else {
+    area.innerHTML = `<button class="auth-btn" onclick="openAuthModal()">SIGN IN</button>`;
+  }
+}
+
+// ============================================================
+// FILTERS
+// ============================================================
+document.getElementById('categoryFilters').addEventListener('click', e => {
+  const btn = e.target.closest('[data-cat]');
+  if (!btn) return;
+  document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = btn.dataset.cat;
+  renderCars();
+});
+
+document.getElementById('brandFilters').addEventListener('click', e => {
+  const btn = e.target.closest('[data-brand]');
+  if (!btn) return;
+  document.querySelectorAll('[data-brand]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeBrand = btn.dataset.brand;
+  renderCars();
+});
+
+// ============================================================
+// RENDER CARS
+// ============================================================
+function renderCars() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const grid = document.getElementById('carsGrid');
+
+  let filtered = CARS.filter(car => {
+    const matchCat = activeCategory === 'all' || car.category === activeCategory;
+    const matchBrand = activeBrand === 'all' || car.brand === activeBrand;
+    const matchSearch = !search || car.model.toLowerCase().includes(search) || car.brand.toLowerCase().includes(search);
+    return matchCat && matchBrand && matchSearch;
+  });
+
+  document.getElementById('resultsCount').textContent = `${filtered.length} vehicles`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <h3>No vehicles found</h3>
+        <p>Try adjusting your filters</p>
+      </div>`;
+    return;
+  }
+
+  const inCartIds = new Set([...cart.map(c => c.id), ...guestCart.map(c => c.id)]);
+
+  grid.innerHTML = filtered.map(car => {
+    const inCart = inCartIds.has(car.id);
+    return `
+    <div class="car-card">
+      <div class="car-img-wrap">
+        <img class="car-img" src="${car.img}" alt="${car.brand} ${car.model}"
+          onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80'">
+        <span class="car-category-badge badge-${car.category}">${car.category.toUpperCase()}</span>
+      </div>
+      <div class="car-body">
+        <div class="car-brand">${car.brand}</div>
+        <div class="car-model">${car.model}</div>
+        <div class="car-specs">
+          <div class="spec"><strong>${car.specs.hp.toLocaleString()}</strong>HP</div>
+          <div class="spec"><strong>${car.specs.speed}</strong>TOP SPEED</div>
+          <div class="spec"><strong>${car.year}</strong>YEAR</div>
+        </div>
+        <div class="car-footer">
+          <div class="car-price">${formatPrice(car.price)}</div>
+          <button class="add-cart-btn ${inCart ? 'in-cart' : ''}" onclick="addToCart(${car.id})">
+            ${inCart ? '✓ SELECTED' : '+ SELECT'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function formatPrice(n) {
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+  return '$' + n.toLocaleString();
+}
+
+let toastTimeout;
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+updateAuthUI();
+renderCars();
+</script>
+
+
+<use-chat-gpt-ai id="USE_CHAT_GPT_AI_ROOT" class="close" data-version="8.37.1" style="transition: 0.1s ease-in-out;"><template shadowrootmode="open"><style><style data-emotion="use-chat-gpt-ai-emotion-cache" data-s=""></style></style><div id="USE_CHAT_GPT_AI_ROOT_Wrapper" translate="no" style="display: flex; flex-direction: column; flex: 1 1 0%; height: 100vh; text-align: left;"><div style="position: relative; user-select: auto; width: 484px; height: 100%; max-width: 1082px; min-width: 480px; box-sizing: border-box; flex-shrink: 0;"><div><div class="" style="position: absolute; user-select: none; width: 10px; height: 100%; top: 0px; left: -5px; cursor: col-resize;"></div></div><div class="use-chat-gpt-ai-app use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-rxnue0"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1dkr10t"></div></div><div></div></div></div><link rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content_style.css"></template></use-chat-gpt-ai><use-chat-gpt-ai-content-menu id="USE_CHAT_GPT_AI_ROOT_Context_Menu"><template shadowrootmode="open"><div id="USE_CHAT_GPT_AI_ROOT_Context_Menu_Portal"><div class="use-chat-gpt-ai--MuiStack-root maxai--chat-hub use-chat-gpt-ai-context-menu-135mcuq"><div class="use-chat-gpt-ai--MuiStack-root maxai-client--chat-hub--container use-chat-gpt-ai-context-menu-15dzdv9"><div class="max-ai__click-context-menu close use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-xsjeto"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-cskh5k"><div class="use-chat-gpt-ai--MuiStack-root mini-icon-button use-chat-gpt-ai-context-menu-1raxo4v" id="max_ai__floating_context_menu__mini_hide_button"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-sx8eqy"></div></div></div></div><div class="use-chat-gpt-ai--MuiStack-root MAX_AI_FLOATING_IMAGE_MINI_MENU use-chat-gpt-ai-context-menu-27sb2t"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-2na43s"><div class="max_ai_floating_image_dot_button use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-g85zgq"></div></div><div class="use-chat-gpt-ai--MuiStack-root max_ai_floating_image_text_button use-chat-gpt-ai-context-menu-cv6ukn"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-context-menu-vdqo2x" tabindex="0" type="button"><span class="use-chat-gpt-ai--MuiButton-icon use-chat-gpt-ai--MuiButton-startIcon use-chat-gpt-ai--MuiButton-iconSizeMedium use-chat-gpt-ai-context-menu-1l6c7y9"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-uvbgop" focusable="false" aria-hidden="true" viewBox="0 0 33 32" width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.3112 11.493L24.5228 7.55842L20.5882 5.76996L24.5228 3.98149L26.3112 0.046875L28.0997 3.98149L32.0343 5.76996L28.0997 7.55842L26.3112 11.493ZM26.3112 31.5238L24.5228 27.5892L20.5882 25.8007L24.5228 24.0123L26.3112 20.0777L28.0997 24.0123L32.0343 25.8007L28.0997 27.5892L26.3112 31.5238ZM12.0035 27.2315L8.42661 19.3623L0.557373 15.7854L8.42661 12.2084L12.0035 4.33919L15.5805 12.2084L23.4497 15.7854L15.5805 19.3623L12.0035 27.2315Z" fill="currentColor"></path></svg></span><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-3qrz66"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-1ij5uka">Ask about this image</div></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai--MuiDivider-vertical use-chat-gpt-ai-context-menu-1tcja4"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-uynw8k"><span class=""><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_close_button use-chat-gpt-ai-context-menu-mv5e1j" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1hudmqv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseOutlinedIcon"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button></span><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_more_close_options use-chat-gpt-ai-context-menu-imxy6q" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1b6mqyd" focusable="false" aria-hidden="true" viewBox="0 0 18 18" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.00009 1.5V9M13.7701 4.98C14.7139 5.92409 15.3565 7.12683 15.6168 8.43614C15.8771 9.74545 15.7433 11.1025 15.2323 12.3358C14.7214 13.5691 13.8562 14.6232 12.7462 15.3648C11.6362 16.1064 10.3313 16.5022 8.99634 16.5022C7.66141 16.5022 6.35645 16.1064 5.24647 15.3648C4.13649 14.6232 3.27132 13.5691 2.76036 12.3358C2.24941 11.1025 2.11561 9.74545 2.37588 8.43614C2.63615 7.12683 3.27881 5.92409 4.22259 4.98" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><div class="maxai__floating_image_menu__close_menu use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-1oflqog"><div class="use-chat-gpt-ai--MuiList-root use-chat-gpt-ai--MuiList-padding use-chat-gpt-ai-context-menu-7gbvxu"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-2rlxtj"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-sg9wgz" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__this_site" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-yxgj72" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-b9edmv"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-1g0a3y9">Hide on this site</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-sg9wgz" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__all_sites" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-yxgj72" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-b9edmv"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-1g0a3y9">Hide always</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div></div><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai-context-menu-1px5dlw"><li class="use-chat-gpt-ai--MuiListItem-root use-chat-gpt-ai--MuiListItem-gutters use-chat-gpt-ai--MuiListItem-padding use-chat-gpt-ai-context-menu-1bh2m53"><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-yxgj72" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-1tsvksn"><p class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiTypography-noWrap use-chat-gpt-ai-context-menu-jfjimq">You can re-enable it in <span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai-context-menu-ssrda">Settings</span></p></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></li></div></div></button></div></div></div><div class="use-chat-gpt-ai--MuiStack-root MAX_AI_FLOATING_IMAGE_MINI_MENU use-chat-gpt-ai-context-menu-1n7mzwx" data-testid="maxai__floating_image_mini_menu__first_enter_image"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-2na43s"><div class="max_ai_floating_image_dot_button use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-g85zgq"></div></div><div class="use-chat-gpt-ai--MuiStack-root max_ai_floating_image_text_button use-chat-gpt-ai-context-menu-cv6ukn"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-context-menu-vdqo2x" tabindex="0" type="button"><span class="use-chat-gpt-ai--MuiButton-icon use-chat-gpt-ai--MuiButton-startIcon use-chat-gpt-ai--MuiButton-iconSizeMedium use-chat-gpt-ai-context-menu-1l6c7y9"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-uvbgop" focusable="false" aria-hidden="true" viewBox="0 0 33 32" width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.3112 11.493L24.5228 7.55842L20.5882 5.76996L24.5228 3.98149L26.3112 0.046875L28.0997 3.98149L32.0343 5.76996L28.0997 7.55842L26.3112 11.493ZM26.3112 31.5238L24.5228 27.5892L20.5882 25.8007L24.5228 24.0123L26.3112 20.0777L28.0997 24.0123L32.0343 25.8007L28.0997 27.5892L26.3112 31.5238ZM12.0035 27.2315L8.42661 19.3623L0.557373 15.7854L8.42661 12.2084L12.0035 4.33919L15.5805 12.2084L23.4497 15.7854L15.5805 19.3623L12.0035 27.2315Z" fill="currentColor"></path></svg></span><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-3qrz66"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-1ij5uka">Ask about this image</div></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai--MuiDivider-vertical use-chat-gpt-ai-context-menu-1tcja4"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-uynw8k"><span class=""><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_close_button use-chat-gpt-ai-context-menu-mv5e1j" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1hudmqv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseOutlinedIcon"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button></span><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_more_close_options use-chat-gpt-ai-context-menu-imxy6q" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1b6mqyd" focusable="false" aria-hidden="true" viewBox="0 0 18 18" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.00009 1.5V9M13.7701 4.98C14.7139 5.92409 15.3565 7.12683 15.6168 8.43614C15.8771 9.74545 15.7433 11.1025 15.2323 12.3358C14.7214 13.5691 13.8562 14.6232 12.7462 15.3648C11.6362 16.1064 10.3313 16.5022 8.99634 16.5022C7.66141 16.5022 6.35645 16.1064 5.24647 15.3648C4.13649 14.6232 3.27132 13.5691 2.76036 12.3358C2.24941 11.1025 2.11561 9.74545 2.37588 8.43614C2.63615 7.12683 3.27881 5.92409 4.22259 4.98" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><div class="maxai__floating_image_menu__close_menu use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-1oflqog"><div class="use-chat-gpt-ai--MuiList-root use-chat-gpt-ai--MuiList-padding use-chat-gpt-ai-context-menu-7gbvxu"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-2rlxtj"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-sg9wgz" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__this_site" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-yxgj72" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-b9edmv"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-1g0a3y9">Hide on this site</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-sg9wgz" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__all_sites" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-yxgj72" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-b9edmv"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-1g0a3y9">Hide always</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div></div><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai-context-menu-1px5dlw"><li class="use-chat-gpt-ai--MuiListItem-root use-chat-gpt-ai--MuiListItem-gutters use-chat-gpt-ai--MuiListItem-padding use-chat-gpt-ai-context-menu-1bh2m53"><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-yxgj72" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-1tsvksn"><p class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiTypography-noWrap use-chat-gpt-ai-context-menu-jfjimq">You can re-enable it in <span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai-context-menu-ssrda">Settings</span></p></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></li></div></div></button></div></div></div></div></div><div id=":r2:" data-floating-ui-portal=""><div id="USE_CHAT_GPT_AI_ROOT_Floating_Reference_Element" data-testid="maxai--floating-context-menu-reference-element" data-disabled-button-clicked="true" aria-hidden="true" tabindex="-1" data-floating-ui-focusable="" style="position: fixed; z-index: -1; opacity: 0; visibility: hidden; top: 8px; left: 8px; width: 736px; height: auto; max-height: 620px;"><div class="RootMenu use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-r1z76x" aria-expanded="false" aria-haspopup="menu" id=":rd:" style="height: auto; max-height: 620px;"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-vsc00s"></div><div class="use-chat-gpt-ai--MuiCollapse-root use-chat-gpt-ai--MuiCollapse-vertical use-chat-gpt-ai--MuiCollapse-hidden use-chat-gpt-ai-context-menu-a0y2e3" style="min-height: 0px; height: 0px; transition-duration: 300ms;"><div class="use-chat-gpt-ai--MuiCollapse-wrapper use-chat-gpt-ai--MuiCollapse-vertical use-chat-gpt-ai-context-menu-hboir5"><div class="use-chat-gpt-ai--MuiCollapse-wrapperInner use-chat-gpt-ai--MuiCollapse-vertical use-chat-gpt-ai-context-menu-8atqhb"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-10lg6vb"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1p8uq3h" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SubdirectoryArrowRightIcon"><path d="m19 15-6 6-1.42-1.42L15.17 16H4V4h2v10h9.17l-3.59-3.58L13 9z"></path></svg><p class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai-context-menu-6en1db"></p></div></div></div></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-uquk85"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-1x40oz6"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-l0onli"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-rxa6wc" style="height: 24px;"><div class="chat-box__input-skeleton use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class="use-chat-gpt-ai--MuiSkeleton-root use-chat-gpt-ai--MuiSkeleton-text use-chat-gpt-ai--MuiSkeleton-pulse use-chat-gpt-ai-context-menu-i9ca5d" style="height: 24px;"></span></div><div class="chat-box__input—prefix use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-8atqhb"></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-10bdbqz"><div class="use-chat-gpt-ai--MuiStack-root max-ai-user-input__expand use-chat-gpt-ai-context-menu-1j4vjwy"></div><textarea id="USE_CHAT_GPT_AI_ROOT_Floating_Input" placeholder="" rows="1" data-min-line="1" style="height: 24px;"></textarea></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-10chyk6"></div></div></div><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-contained use-chat-gpt-ai--MuiButton-containedPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-containedSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation Mui-disabled use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-contained use-chat-gpt-ai--MuiButton-containedPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-containedSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-context-menu-1bad10s" tabindex="-1" type="button" disabled="" data-testid="sidebar_actions__send_btn"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-vh04is" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SendIcon"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"></path></svg></button></div></div></div></div></div><div id=":re:" data-floating-ui-portal=""></div></div><style><style data-emotion="use-chat-gpt-ai-context-menu" data-s=""></style></style><link rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content_style.css"></template></use-chat-gpt-ai-content-menu><use-chat-gpt-ai id="maxai-global-popup-container" translate="no"><template shadowrootmode="open"><div></div><style></style><link rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content_style.css"></template></use-chat-gpt-ai><max-ai-minimum-app id="USE_CHAT_GPT_AI_ROOT_Minimize_Container" data-version="8.37.1"><template shadowrootmode="open"><style><style data-emotion="use-chat-gpt-ai-emotion-cache" data-s=""></style></style><div><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-1p352da"><div class="react-draggable use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-t1tl5f" data-testid="quick-access-maxai-mini-button-main" style="transform: translate(0px, 56px);"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-32bn5h"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-z6dm6v"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-eh29y" type="quick-access"><div class="" style="position: absolute; top: 0px; right: 0px; width: var(--expanded-width); height: 100%; pointer-events: none; margin-right: calc(-1 * var(--middle-button-width) - 2px);"></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1qe5z8m"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-emotion-cache-zmeedx" tabindex="0" type="button" data-testid="maxai__quick_access__open_sidebar_button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-5v59fm" data-testid="quick-access-maxai-mini-button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-jwgvl3"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-emotion-cache-12h3apu" focusable="false" aria-hidden="true" viewBox="0 0 33 32" width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.3112 11.493L24.5228 7.55842L20.5882 5.76996L24.5228 3.98149L26.3112 0.046875L28.0997 3.98149L32.0343 5.76996L28.0997 7.55842L26.3112 11.493ZM26.3112 31.5238L24.5228 27.5892L20.5882 25.8007L24.5228 24.0123L26.3112 20.0777L28.0997 24.0123L32.0343 25.8007L28.0997 27.5892L26.3112 31.5238ZM12.0035 27.2315L8.42661 19.3623L0.557373 15.7854L8.42661 12.2084L12.0035 4.33919L15.5805 12.2084L23.4497 15.7854L15.5805 19.3623L12.0035 27.2315Z" fill="currentColor"></path></svg></div></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-emotion-cache-w0pj6f"></span></button><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-emotion-cache-7c4uys" tabindex="0" type="button" data-testid="maxai__quick_access__immersive_chat_button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1f2ltcv" data-testid="quick-access-maxai-immersive-chat-button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-emotion-cache-w17z31" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FullscreenOutlinedIcon"><path d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"></path></svg></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-emotion-cache-w0pj6f"></span></button></div></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-a3te9x"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-flpv0j"></div></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-17kopzr"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-10aim0z"></div></div></div></div></div></div></div></template></max-ai-minimum-app><div id="MAXAI_SNACKBAR_CONTAINER" style="z-index: 2147483647; color: rgb(255, 255, 255); position: absolute;"><span></span></div></body></html>

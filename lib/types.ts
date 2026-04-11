@@ -14,7 +14,7 @@ export interface Car {
   price: number;
   mileage: number;
   fuel: "Petrol" | "Electric" | "Hybrid";
-  category: "SUV" | "Sedan" | "Sport" | "Electric";
+  category: "SUV" | "Sedan" | "Sport" | "Electric" | "Hypercar";
   brand: string;
   available: boolean;
   badge: string;

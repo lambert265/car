@@ -6,7 +6,7 @@ import { Menu, X, Phone, ChevronDown, ArrowRight, Search, Heart, BarChart2, User
 import { motion, AnimatePresence } from "framer-motion";
 import { useWishlist } from "@/lib/wishlist";
 import { useCompare } from "@/lib/compare";
-import { useAuth } from "@/lib/auth.tsx";
+import { useAuth } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
 import { CARS } from "@/lib/cars";
 import CartDrawer from "@/components/CartDrawer";

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { X, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart";
-import { useAuth } from "@/lib/auth.tsx";
+import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
 interface Props {

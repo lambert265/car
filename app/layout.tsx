@@ -8,7 +8,7 @@ import LiveChat from "@/components/LiveChat";
 import CompareBar from "@/components/CompareBar";
 import { WishlistProvider } from "@/lib/wishlist";
 import { CompareProvider } from "@/lib/compare";
-import { AuthProvider } from "@/lib/auth.tsx";
+import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });

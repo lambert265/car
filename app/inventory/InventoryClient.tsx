@@ -12,6 +12,28 @@ const CATEGORIES = ["SUV", "Sedan", "Sport", "Electric"] as const;
 const FUELS      = ["Petrol", "Electric", "Hybrid"] as const;
 const MAX_PRICE  = Math.ceil(Math.max(...CARS.map((c) => c.price)) / 50000) * 50000;
 
+const CURRENCIES = [
+  { code: "USD", symbol: "$",  label: "USD — US Dollar",          rate: 1       },
+  { code: "EUR", symbol: "€",  label: "EUR — Euro",               rate: 0.92    },
+  { code: "GBP", symbol: "£",  label: "GBP — British Pound",      rate: 0.79    },
+  { code: "JPY", symbol: "¥",  label: "JPY — Japanese Yen",       rate: 149.5   },
+  { code: "CAD", symbol: "C$", label: "CAD — Canadian Dollar",    rate: 1.36    },
+  { code: "AUD", symbol: "A$", label: "AUD — Australian Dollar",  rate: 1.53    },
+  { code: "CHF", symbol: "Fr", label: "CHF — Swiss Franc",        rate: 0.90    },
+  { code: "CNY", symbol: "¥",  label: "CNY — Chinese Yuan",       rate: 7.24    },
+  { code: "AED", symbol: "د.إ",label: "AED — UAE Dirham",         rate: 3.67    },
+  { code: "SAR", symbol: "﷼",  label: "SAR — Saudi Riyal",        rate: 3.75    },
+  { code: "INR", symbol: "₹",  label: "INR — Indian Rupee",       rate: 83.1    },
+  { code: "SGD", symbol: "S$", label: "SGD — Singapore Dollar",   rate: 1.34    },
+  { code: "HKD", symbol: "HK$",label: "HKD — Hong Kong Dollar",   rate: 7.82    },
+  { code: "MXN", symbol: "$",  label: "MXN — Mexican Peso",       rate: 17.2    },
+  { code: "BRL", symbol: "R$", label: "BRL — Brazilian Real",     rate: 4.97    },
+];
+
+export const CurrencyContext = React.createContext({ symbol: "$", rate: 1, code: "USD" });
+
+import React from "react";
+
 function GoldCheckbox({ checked, onClick }: { checked: boolean; onClick: () => void }) {
   return (
     <div
@@ -25,11 +47,11 @@ function GoldCheckbox({ checked, onClick }: { checked: boolean; onClick: () => v
   );
 }
 
-function fmt(n: number) {
-  return n >= 1000000
-    ? `$${(n / 1000000).toFixed(1)}M`
-    : `$${(n / 1000).toFixed(0)}k`;
-}
+  function fmt(n: number) {
+    const converted = n * currency.rate;
+    if (converted >= 1000000) return `${currency.symbol}${(converted / 1000000).toFixed(1)}M`;
+    return `${currency.symbol}${(converted / 1000).toFixed(0)}k`;
+  }
 
 export default function InventoryClient() {
   const params = useSearchParams();
@@ -44,6 +66,7 @@ export default function InventoryClient() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading,     setLoading]     = useState(false);
   const [openSecs,    setOpenSecs]    = useState<string[]>(["category", "brand", "price", "fuel"]);
+  const [currency,    setCurrency]    = useState(CURRENCIES[0]);
 
   function toggleSec(s: string) {
     setOpenSecs((p) => p.includes(s) ? p.filter((x) => x !== s) : [...p, s]);
@@ -200,6 +223,7 @@ export default function InventoryClient() {
   );
 
   return (
+    <CurrencyContext.Provider value={{ symbol: currency.symbol, rate: currency.rate, code: currency.code }}>
     <div className="pt-[68px] bg-[#080808] min-h-screen">
 
       {/* Page header */}
@@ -263,6 +287,16 @@ export default function InventoryClient() {
               >
                 <SlidersHorizontal size={13} /> Filters {activeChips.length > 0 && `(${activeChips.length})`}
               </button>
+              {/* Currency selector */}
+              <select
+                value={currency.code}
+                onChange={(e) => setCurrency(CURRENCIES.find(c => c.code === e.target.value)!)}
+                className="bg-[#0d0d0d] border border-white/[0.08] text-white/40 text-[12px] px-3 py-2 focus:outline-none focus:border-[#C9A84C]/40 cursor-pointer hover:border-white/15 transition-colors"
+              >
+                {CURRENCIES.map(c => (
+                  <option key={c.code} value={c.code}>{c.code} {c.symbol}</option>
+                ))}
+              </select>
               <select
                 value={sort} onChange={(e) => setSort(e.target.value)}
                 className="bg-[#0d0d0d] border border-white/[0.08] text-white/40 text-[12px] px-3 py-2 focus:outline-none focus:border-[#C9A84C]/40 cursor-pointer hover:border-white/15 transition-colors"
@@ -312,5 +346,6 @@ export default function InventoryClient() {
         </div>
       )}
     </div>
+    </CurrencyContext.Provider>
   );
 }
