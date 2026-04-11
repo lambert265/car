@@ -58,7 +58,7 @@ function CurrencyPicker({ currency, onChange }: {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-2 px-3 py-2 bg-[#0d0d0d] border border-white/[0.08] hover:border-[#C9A84C]/40 transition-colors text-[12px] min-w-[110px]"
+        className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 bg-[#0d0d0d] border border-white/[0.08] hover:border-[#C9A84C]/40 transition-colors text-[11px] sm:text-[12px] min-w-[100px] sm:min-w-[110px]"
       >
         <span className="text-base leading-none">{currency.flag}</span>
         <span className="text-[#C9A84C] font-bold tracking-wider">{currency.code}</span>
@@ -273,19 +273,19 @@ export default function InventoryClient() {
     <CurrencyContext.Provider value={{ symbol: currency.symbol, rate: currency.rate, code: currency.code }}>
       <div className="pt-[68px] bg-[#080808] min-h-screen">
 
-        <div className="bg-[#0a0a0a] border-b border-white/[0.05] py-12">
+        <div className="bg-[#0a0a0a] border-b border-white/[0.05] py-8 sm:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <p className="text-[11px] text-white/20 mb-2 tracking-wider uppercase">
+            <p className="text-[10px] sm:text-[11px] text-white/20 mb-2 tracking-wider uppercase">
               <span className="hover:text-[#C9A84C] cursor-pointer transition-colors">Home</span>
               <span className="mx-2 text-white/10">›</span>
               Inventory
             </p>
-            <h1 className="text-white font-bold text-3xl tracking-tight mb-1">Our Inventory</h1>
-            <p className="text-white/30 text-[14px]">{CARS.length} certified luxury vehicles, transparently priced.</p>
+            <h1 className="text-white font-bold text-2xl sm:text-3xl tracking-tight mb-1">Our Inventory</h1>
+            <p className="text-white/30 text-[13px] sm:text-[14px]">{CARS.length} certified luxury vehicles, transparently priced.</p>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex gap-8">
 
           <div className="hidden lg:block w-60 shrink-0">
             <div className="bg-[#0d0d0d] border border-white/[0.06] p-6 sticky top-24">
@@ -296,32 +296,32 @@ export default function InventoryClient() {
           <div className="flex-1 min-w-0">
 
             {activeChips.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-5">
+              <div className="flex flex-wrap gap-2 mb-4 sm:mb-5">
                 {activeChips.map(({ label, onRemove }) => (
                   <button key={label} onClick={onRemove}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#C9A84C]/10 border border-[#C9A84C]/25 text-[#C9A84C] text-[11px] font-semibold rounded-full hover:bg-[#C9A84C]/20 transition-colors">
+                    className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-[#C9A84C]/10 border border-[#C9A84C]/25 text-[#C9A84C] text-[10px] sm:text-[11px] font-semibold rounded-full hover:bg-[#C9A84C]/20 transition-colors">
                     {label}<X size={10} />
                   </button>
                 ))}
                 <button onClick={clearAll}
-                  className="flex items-center gap-1.5 px-3 py-1.5 border border-white/[0.08] text-white/25 text-[11px] rounded-full hover:border-white/20 hover:text-white/50 transition-colors">
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 border border-white/[0.08] text-white/25 text-[10px] sm:text-[11px] rounded-full hover:border-white/20 hover:text-white/50 transition-colors">
                   Clear all
                 </button>
               </div>
             )}
 
-            <div className="flex items-center justify-between mb-7 gap-4">
-              <p className="text-[12px] text-white/25">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 sm:mb-7 gap-3 sm:gap-4">
+              <p className="text-[11px] sm:text-[12px] text-white/25">
                 <span className="font-semibold text-white/60">{results.length}</span> vehicle{results.length !== 1 ? "s" : ""} found
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                 <button onClick={() => setSidebarOpen(true)}
-                  className="lg:hidden flex items-center gap-2 px-4 py-2 border border-white/[0.08] text-[12px] font-medium text-white/40 hover:border-[#C9A84C]/40 hover:text-[#C9A84C] transition-colors">
+                  className="lg:hidden flex items-center gap-2 px-3 sm:px-4 py-2 border border-white/[0.08] text-[11px] sm:text-[12px] font-medium text-white/40 hover:border-[#C9A84C]/40 hover:text-[#C9A84C] transition-colors">
                   <SlidersHorizontal size={13} /> Filters {activeChips.length > 0 && `(${activeChips.length})`}
                 </button>
                 <CurrencyPicker currency={currency} onChange={setCurrency} />
                 <select value={sort} onChange={(e) => setSort(e.target.value)}
-                  className="bg-[#0d0d0d] border border-white/[0.08] text-white/40 text-[12px] px-3 py-2 focus:outline-none focus:border-[#C9A84C]/40 cursor-pointer hover:border-white/15 transition-colors">
+                  className="bg-[#0d0d0d] border border-white/[0.08] text-white/40 text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-2 focus:outline-none focus:border-[#C9A84C]/40 cursor-pointer hover:border-white/15 transition-colors flex-1 sm:flex-initial">
                   <option value="default">Featured</option>
                   <option value="price-asc">Price: Low → High</option>
                   <option value="price-desc">Price: High → Low</option>
@@ -332,17 +332,17 @@ export default function InventoryClient() {
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
                 {Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
               </div>
             ) : results.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
                 {results.map((car) => <CarCard key={car.id} car={car} />)}
               </div>
             ) : (
-              <div className="text-center py-28 border border-white/[0.05]">
-                <p className="text-white/20 text-[15px] mb-5">No vehicles match your filters.</p>
-                <button onClick={clearAll} className="btn-gold px-6 py-3 text-[11px] font-bold uppercase tracking-widest">Clear Filters</button>
+              <div className="text-center py-20 sm:py-28 border border-white/[0.05]">
+                <p className="text-white/20 text-[14px] sm:text-[15px] mb-5">No vehicles match your filters.</p>
+                <button onClick={clearAll} className="btn-gold px-5 sm:px-6 py-2.5 sm:py-3 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest">Clear Filters</button>
               </div>
             )}
           </div>
@@ -351,7 +351,7 @@ export default function InventoryClient() {
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-            <div className="absolute right-0 top-0 bottom-0 w-[300px] bg-[#0d0d0d] border-l border-white/[0.06] overflow-y-auto p-6">
+            <div className="absolute right-0 top-0 bottom-0 w-[85vw] max-w-[320px] bg-[#0d0d0d] border-l border-white/[0.06] overflow-y-auto p-5 sm:p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/50">Filters</h3>
                 <button onClick={() => setSidebarOpen(false)} className="text-white/30 hover:text-white transition-colors"><X size={18} /></button>
