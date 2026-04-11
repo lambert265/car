@@ -125,7 +125,7 @@ export default function HomePage() {
         </div>
 
         {/* Scroll cue */}
-        <div className="absolute bottom-8 right-10 flex flex-col items-center gap-2 opacity-40">
+        <div className="hidden md:flex absolute bottom-8 right-10 flex-col items-center gap-2 opacity-40">
           <p className="text-white text-[9px] uppercase tracking-[0.35em] rotate-90 mb-4">Scroll</p>
           <div className="w-px h-14 bg-gradient-to-b from-[#C9A84C] to-transparent animate-pulse" />
         </div>

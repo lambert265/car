@@ -9,6 +9,19 @@ type Message = { from: "user" | "agent" | "ai"; text: string; loading?: boolean 
 const HUMAN_QUICK = ["Browse inventory", "Book a test drive", "Finance options", "Part exchange"];
 const AI_QUICK    = ["What's the best SUV under $150k?", "Compare Porsche vs Ferrari", "Help me choose a car", "Best electric options"];
 
+const ROUTES: Record<string, string> = {
+  "/inventory": "inventory",
+  "/rental": "rental",
+  "/finance": "finance",
+  "/sell": "sell",
+  "/contact": "contact",
+  "/about": "about",
+  "/showrooms": "showrooms",
+  "/compare": "compare",
+  "/saved": "saved",
+  "/account": "account",
+};
+
 const SYSTEM_PROMPT = `You are VANTA Motors' expert automotive concierge AI. You are a luxury car specialist, financial analyst, and buying advisor combined.
 
 Your inventory includes: ${CARS.map(c => `${c.year} ${c.name} ($${c.price.toLocaleString()}, ${c.fuel}, ${c.category})`).join(", ")}.
@@ -42,6 +55,16 @@ export default function LiveChat() {
 
   async function sendAI(text: string) {
     if (!text.trim() || aiLoading) return;
+    
+    // Check if message starts with /
+    if (text.startsWith("/")) {
+      const route = text.toLowerCase();
+      if (ROUTES[route]) {
+        window.location.href = route;
+        return;
+      }
+    }
+    
     const userMsg: Message = { from: "user", text };
     setAiMsgs((m) => [...m, userMsg]);
     setInput("");
@@ -69,6 +92,16 @@ export default function LiveChat() {
 
   function sendHuman(text: string) {
     if (!text.trim()) return;
+    
+    // Check if message starts with /
+    if (text.startsWith("/")) {
+      const route = text.toLowerCase();
+      if (ROUTES[route]) {
+        window.location.href = route;
+        return;
+      }
+    }
+    
     setHumanMsgs((m) => [...m, { from: "user", text }]);
     setInput("");
     setTimeout(() => {

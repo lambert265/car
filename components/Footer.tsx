@@ -80,7 +80,7 @@ export default function Footer() {
 
       {/* ── MOBILE FLOATING PILL NAV ── */}
       <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 md:hidden">
-        <div className="flex items-center bg-[#0e0e0e]/98 backdrop-blur-xl rounded-2xl px-1.5 py-1.5 shadow-[0_8px_40px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.04)]">
+        <div className="flex items-center bg-[#0e0e0e]/98 backdrop-blur-xl rounded-full px-2 py-2 shadow-[0_8px_40px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.04)]">
           {MOBILE_NAV.map(({ label, href, icon: Icon, external }) => {
             const isActive = !external && pathname === href;
             const Wrapper  = external ? "a" : Link;
@@ -92,7 +92,7 @@ export default function Footer() {
               <Wrapper
                 key={label}
                 {...(extraProps as any)}
-                className={`relative flex flex-col items-center justify-center gap-1 w-[62px] h-[52px] rounded-xl transition-all duration-200 ${
+                className={`relative flex flex-col items-center justify-center gap-1 w-[62px] h-[52px] rounded-full transition-all duration-200 ${
                   isActive
                     ? "bg-[#C9A84C] text-black"
                     : "text-white/25 hover:text-white/60 hover:bg-white/[0.04]"
@@ -104,9 +104,6 @@ export default function Footer() {
                 }`}>
                   {label}
                 </span>
-                {isActive && (
-                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-black/40" />
-                )}
               </Wrapper>
             );
           })}
