@@ -7,7 +7,6 @@ import PageTransition from "@/components/PageTransition";
 import LiveChat from "@/components/LiveChat";
 import CompareBar from "@/components/CompareBar";
 import { WishlistProvider } from "@/lib/wishlist";
-import { CompareProvider } from "@/lib/compare";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
 
@@ -28,13 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
         <CartProvider>
         <WishlistProvider>
-          <CompareProvider>
             <Navbar />
             <PageTransition>{children}</PageTransition>
             <Footer />
             <LiveChat />
             <CompareBar />
-          </CompareProvider>
         </WishlistProvider>
         </CartProvider>
         </AuthProvider>
