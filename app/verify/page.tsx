@@ -171,6 +171,12 @@ function VerifyContent() {
                     Sign in
                   </Link>
                 </p>
+                <p className="text-white/20 text-[11px] text-center mt-3">
+                  Need to verify later?{" "}
+                  <Link href="/verify" className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold">
+                    Go to verification page
+                  </Link>
+                </p>
               </div>
             </>
           )}

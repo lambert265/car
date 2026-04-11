@@ -18,10 +18,25 @@ export default function SignUpPage() {
   const [error,    setError]    = useState("");
   const [step,     setStep]     = useState<"form" | "code" | "success">("form");
 
+  const passwordRequirements = [
+    { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
+    { label: "One uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
+    { label: "One lowercase letter", test: (p: string) => /[a-z]/.test(p) },
+    { label: "One number", test: (p: string) => /[0-9]/.test(p) },
+    { label: "One special character", test: (p: string) => /[!@#$%^&*(),.?":{}|<>]/.test(p) },
+  ];
+
+  const validatePassword = (pwd: string) => {
+    return passwordRequirements.every(req => req.test(pwd));
+  };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (password !== confirm) { setError("Passwords do not match."); return; }
-    if (password.length < 8)  { setError("Password must be at least 8 characters."); return; }
+    if (!validatePassword(password)) { 
+      setError("Password does not meet all requirements."); 
+      return; 
+    }
     setLoading(true); setError("");
     
     const { error: signUpError } = await supabase.auth.signUp({
@@ -41,6 +56,17 @@ export default function SignUpPage() {
     
     setLoading(false);
     setStep("code");
+    
+    // Send verification email with code
+    try {
+      await fetch('/api/auth/send-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+    } catch (err) {
+      console.error('Failed to send verification email:', err);
+    }
   }
 
   async function handleVerifyCode(e: React.FormEvent) {
@@ -133,6 +159,9 @@ export default function SignUpPage() {
                     onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                     placeholder="000000"
                     maxLength={6}
+                    autoFocus
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[18px] px-4 py-4 focus:outline-none focus:border-[#C9A84C]/50 transition-colors text-center tracking-[0.5em] font-mono"
                   />
                   <p className="text-white/20 text-[11px] mt-2 text-center">
@@ -159,13 +188,36 @@ export default function SignUpPage() {
                 </button>
               </form>
 
-              <div className="mt-6 text-center">
+              <div className="mt-6 text-center space-y-3">
                 <button
                   onClick={() => setStep("form")}
                   className="text-white/30 hover:text-[#C9A84C] text-[12px] transition-colors"
                 >
                   ← Back to sign up
                 </button>
+                <div className="text-white/20 text-[11px]">
+                  Didn't receive the code?{" "}
+                  <button
+                    onClick={async () => {
+                      setLoading(true);
+                      try {
+                        await fetch('/api/auth/send-verification', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ email }),
+                        });
+                        setError("");
+                      } catch (err) {
+                        setError("Failed to resend code");
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                    className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold"
+                  >
+                    Resend
+                  </button>
+                </div>
               </div>
             </>
           ) : (
@@ -194,13 +246,32 @@ export default function SignUpPage() {
                   <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Password</label>
                   <div className="relative">
                     <input required type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Min. 8 characters"
+                      placeholder="Create a strong password"
                       className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 pr-12 focus:outline-none focus:border-[#C9A84C]/50 transition-colors" />
                     <button type="button" onClick={() => setShow(!show)}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 transition-colors">
                       {show ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
+                  {password && (
+                    <div className="mt-3 space-y-2">
+                      {passwordRequirements.map((req, i) => {
+                        const met = req.test(password);
+                        return (
+                          <div key={i} className="flex items-center gap-2">
+                            <div className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                              met ? "bg-emerald-400" : "bg-white/10"
+                            }`} />
+                            <span className={`text-[11px] transition-colors ${
+                              met ? "text-emerald-400" : "text-white/20"
+                            }`}>
+                              {req.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Confirm Password</label>
