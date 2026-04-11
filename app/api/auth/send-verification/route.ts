@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email
-    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify?email=${encodeURIComponent(email)}&code=${verificationCode}`;
+    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?type=email_verification&email=${encodeURIComponent(email)}&code=${verificationCode}`;
     
     await sendVerificationEmail({
       email,
