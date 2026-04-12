@@ -74,7 +74,12 @@ export default function SignInPage() {
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Password</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Password</label>
+                <Link href="/forgot-password" className="text-[10px] text-[#C9A84C] hover:text-[#E8C97A] transition-colors uppercase tracking-wider">
+                  Forgot?
+                </Link>
+              </div>
               <div className="relative">
                 <input
                   required type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
