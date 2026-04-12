@@ -35,7 +35,7 @@ export default function CheckoutClient() {
     tradeInValue: 0,
   });
 
-  const car = carId ? CARS.find(c => c.id === Number(carId)) : cart[0] ? CARS.find(c => c.id === cart[0].carId) : null;
+  const car = carId ? CARS.find(c => c.id === Number(carId)) : cart[0] ? CARS.find(c => c.id === cart[0].id) : null;
 
   if (!car) {
     return (
