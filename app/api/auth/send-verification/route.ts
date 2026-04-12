@@ -12,6 +12,13 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createClient();
+    
+    // Delete any existing codes for this email
+    await supabase
+      .from('verification_codes')
+      .delete()
+      .eq('email', email);
+    
     const verificationCode = generateVerificationCode();
     
     // Store verification code in database with expiry

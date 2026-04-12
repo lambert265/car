@@ -79,25 +79,48 @@ export default function SignUpPage() {
     setLoading(true);
     setError("");
 
-    const { error: verifyError } = await supabase.auth.verifyOtp({
-      email,
-      token: code,
-      type: 'signup'
-    });
+    try {
+      // Verify the code from our custom table
+      const { data: verificationData, error: verifyError } = await supabase
+        .from("verification_codes")
+        .select("*")
+        .eq("email", email)
+        .eq("code", code)
+        .single();
 
-    if (verifyError) {
-      setError(verifyError.message);
+      if (verifyError || !verificationData) {
+        setError("Invalid verification code");
+        setLoading(false);
+        return;
+      }
+
+      // Check if code is expired
+      const expiresAt = new Date(verificationData.expires_at);
+      if (expiresAt < new Date()) {
+        setError("Verification code has expired. Please request a new one.");
+        setLoading(false);
+        return;
+      }
+
+      // Delete the used verification code
+      await supabase
+        .from("verification_codes")
+        .delete()
+        .eq("email", email)
+        .eq("code", code);
+
       setLoading(false);
-      return;
+      setStep("success");
+      
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 2000);
+    } catch (err) {
+      console.error("Verification error:", err);
+      setError("An error occurred during verification");
+      setLoading(false);
     }
-
-    setLoading(false);
-    setStep("success");
-    
-    // Redirect after 2 seconds
-    setTimeout(() => {
-      router.push("/sign-in");
-    }, 2000);
   }
 
   return (
@@ -197,20 +220,31 @@ export default function SignUpPage() {
                   <button
                     onClick={async () => {
                       setLoading(true);
+                      setError("");
                       try {
-                        await fetch('/api/auth/send-verification', {
+                        const response = await fetch('/api/auth/send-verification', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
                           body: JSON.stringify({ email }),
                         });
-                        setError("");
+                        
+                        if (response.ok) {
+                          setError("");
+                          // Show success message briefly
+                          const successMsg = "Code resent! Check your email.";
+                          setError(successMsg);
+                          setTimeout(() => setError(""), 3000);
+                        } else {
+                          setError("Failed to resend code. Please try again.");
+                        }
                       } catch (err) {
-                        setError("Failed to resend code");
+                        setError("Failed to resend code. Please try again.");
                       } finally {
                         setLoading(false);
                       }
                     }}
-                    className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold"
+                    disabled={loading}
+                    className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Resend
                   </button>

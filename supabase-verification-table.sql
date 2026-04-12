@@ -30,6 +30,11 @@ CREATE POLICY "Allow update verification codes" ON verification_codes
   FOR UPDATE
   USING (true);
 
+-- Policy to allow deleting verification codes
+CREATE POLICY "Allow delete verification codes" ON verification_codes
+  FOR DELETE
+  USING (true);
+
 -- Function to clean up expired codes (run periodically)
 CREATE OR REPLACE FUNCTION cleanup_expired_verification_codes()
 RETURNS void AS $$
