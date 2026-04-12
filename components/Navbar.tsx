@@ -25,6 +25,7 @@ const NAV_LINKS = [
   },
   { label: "Rental",     href: "/rental"     },
   { label: "Finance",    href: "/finance"    },
+  { label: "Blog",       href: "/blog"       },
   { label: "Sell",       href: "/sell"       },
   { label: "Showrooms",  href: "/showrooms"  },
   { label: "About",      href: "/about"      },
@@ -174,8 +175,10 @@ export default function Navbar() {
 
           {/* Right icons */}
           <div className="flex items-center gap-2">
-            {/* Notifications */}
-            <NotificationCenter />
+            {/* Notifications - Always visible */}
+            <div className="hidden lg:block">
+              <NotificationCenter />
+            </div>
             {/* Cart */}
             <button onClick={() => setCartOpen(true)}
               className="relative flex w-9 h-9 items-center justify-center text-white/30 hover:text-[#C9A84C] transition-colors rounded-full hover:bg-white/[0.05]">
@@ -430,6 +433,13 @@ export default function Navbar() {
                 <Link href="/saved" onClick={() => setMobileOpen(false)}
                   className="flex items-center justify-between px-6 py-4 text-[11px] font-semibold tracking-[0.15em] uppercase border-b border-white/[0.05] text-white/35 hover:text-[#C9A84C] transition-colors">
                   Saved {wishIds.length > 0 && <span className="text-[#C9A84C] text-[10px]">{wishIds.length}</span>}
+                </Link>
+                <Link href="/blog" onClick={() => setMobileOpen(false)}
+                  className={`flex items-center justify-between px-6 py-4 text-[11px] font-semibold tracking-[0.15em] uppercase border-b border-white/[0.05] transition-colors ${
+                    pathname === "/blog" ? "text-[#C9A84C] bg-[#C9A84C]/5" : "text-white/35 hover:text-white hover:bg-white/[0.03]"
+                  }`}>
+                  Blog
+                  <ArrowRight size={11} className="opacity-25" />
                 </Link>
                 {user ? (
                   <Link href="/account" onClick={() => setMobileOpen(false)}

@@ -63,7 +63,7 @@ export default function NotificationCenter() {
     }
   };
 
-  if (!user) return null;
+  // Show bell icon always, but show "Sign in" message if not logged in
 
   return (
     <div className="relative">
@@ -83,6 +83,24 @@ export default function NotificationCenter() {
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-[#0d0d0d] border border-white/[0.08] shadow-2xl z-50 max-h-[80vh] flex flex-col">
+            {!user ? (
+              // Not signed in - show sign in prompt
+              <div className="p-8 text-center">
+                <Bell size={32} className="text-white/10 mx-auto mb-4" />
+                <h3 className="text-white font-bold text-[15px] mb-2">Sign in for Notifications</h3>
+                <p className="text-white/30 text-[12px] mb-6">
+                  Get notified about price drops, new inventory, and appointment reminders.
+                </p>
+                <a
+                  href="/sign-in"
+                  className="btn-gold inline-flex items-center justify-center px-6 py-2.5 text-[11px] font-bold uppercase tracking-wider"
+                >
+                  Sign In
+                </a>
+              </div>
+            ) : (
+              // Signed in - show notifications
+              <>
             <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
                 <Bell size={16} className="text-[#C9A84C]" />
@@ -169,6 +187,9 @@ export default function NotificationCenter() {
                 </div>
               )}
             </div>
+          </div>
+              </>
+            )}
           </div>
         </>
       )}
