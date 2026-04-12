@@ -56,17 +56,6 @@ export default function SignUpPage() {
     
     setLoading(false);
     setStep("code");
-    
-    // Send verification email with code
-    try {
-      await fetch('/api/auth/send-verification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-    } catch (err) {
-      console.error('Failed to send verification email:', err);
-    }
   }
 
   async function handleVerifyCode(e: React.FormEvent) {
@@ -79,48 +68,25 @@ export default function SignUpPage() {
     setLoading(true);
     setError("");
 
-    try {
-      // Verify the code from our custom table
-      const { data: verificationData, error: verifyError } = await supabase
-        .from("verification_codes")
-        .select("*")
-        .eq("email", email)
-        .eq("code", code)
-        .single();
+    const { error: verifyError } = await supabase.auth.verifyOtp({
+      email,
+      token: code,
+      type: 'signup'
+    });
 
-      if (verifyError || !verificationData) {
-        setError("Invalid verification code");
-        setLoading(false);
-        return;
-      }
-
-      // Check if code is expired
-      const expiresAt = new Date(verificationData.expires_at);
-      if (expiresAt < new Date()) {
-        setError("Verification code has expired. Please request a new one.");
-        setLoading(false);
-        return;
-      }
-
-      // Delete the used verification code
-      await supabase
-        .from("verification_codes")
-        .delete()
-        .eq("email", email)
-        .eq("code", code);
-
+    if (verifyError) {
+      setError(verifyError.message);
       setLoading(false);
-      setStep("success");
-      
-      // Redirect after 2 seconds
-      setTimeout(() => {
-        router.push("/sign-in");
-      }, 2000);
-    } catch (err) {
-      console.error("Verification error:", err);
-      setError("An error occurred during verification");
-      setLoading(false);
+      return;
     }
+
+    setLoading(false);
+    setStep("success");
+    
+    // Redirect after 2 seconds
+    setTimeout(() => {
+      router.push("/sign-in");
+    }, 2000);
   }
 
   return (
@@ -176,22 +142,21 @@ export default function SignUpPage() {
                   <input
                     type="text"
                     value={code}
-                    onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
                     placeholder="000000"
-                    maxLength={6}
                     autoFocus
                     inputMode="numeric"
                     pattern="[0-9]*"
                     className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[18px] px-4 py-4 focus:outline-none focus:border-[#C9A84C]/50 transition-colors text-center tracking-[0.5em] font-mono"
                   />
                   <p className="text-white/20 text-[11px] mt-2 text-center">
-                    Check your email for the 6-digit code
+                    Check your email for the verification code
                   </p>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || code.length !== 6}
+                  disabled={loading || code.length < 6}
                   className="btn-gold w-full py-4 text-[11px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
                 >
                   {loading ? (
@@ -222,18 +187,13 @@ export default function SignUpPage() {
                       setLoading(true);
                       setError("");
                       try {
-                        const response = await fetch('/api/auth/send-verification', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ email }),
+                        const { error } = await supabase.auth.resend({
+                          type: 'signup',
+                          email: email,
                         });
                         
-                        if (response.ok) {
+                        if (!error) {
                           setError("");
-                          // Show success message briefly
-                          const successMsg = "Code resent! Check your email.";
-                          setError(successMsg);
-                          setTimeout(() => setError(""), 3000);
                         } else {
                           setError("Failed to resend code. Please try again.");
                         }

@@ -32,7 +32,7 @@ export async function sendVerificationEmail(data: VerificationEmailData) {
   return htmlTemplate;
 }
 
-// Generate 6-digit verification code
+// Generate 8-digit verification code
 export function generateVerificationCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  return Math.floor(10000000 + Math.random() * 90000000).toString();
 }
