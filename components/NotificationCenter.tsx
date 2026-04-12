@@ -187,7 +187,6 @@ export default function NotificationCenter() {
                 </div>
               )}
             </div>
-          </div>
               </>
             )}
           </div>
