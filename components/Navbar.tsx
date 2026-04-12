@@ -10,6 +10,7 @@ import { useAuth } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
 import { CARS } from "@/lib/cars";
 import CartDrawer from "@/components/CartDrawer";
+import NotificationCenter from "@/components/NotificationCenter";
 
 const NAV_LINKS = [
   { label: "Inventory", href: "/inventory" },
@@ -173,6 +174,8 @@ export default function Navbar() {
 
           {/* Right icons */}
           <div className="flex items-center gap-2">
+            {/* Notifications */}
+            <NotificationCenter />
             {/* Cart */}
             <button onClick={() => setCartOpen(true)}
               className="relative flex w-9 h-9 items-center justify-center text-white/30 hover:text-[#C9A84C] transition-colors rounded-full hover:bg-white/[0.05]">

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, Mail, MapPin, Home, Car, Key, CreditCard, PhoneCall } from "lucide-react";
+import NewsletterSignup from "./NewsletterSignup";
 
 const MOBILE_NAV = [
   { label: "Home",      href: "/",               icon: Home,      external: false },
@@ -18,7 +19,11 @@ export default function Footer() {
     <>
       {/* ── MAIN FOOTER ── */}
       <footer className="bg-[#080808] text-white mb-[80px] md:mb-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+          <div className="mb-12">
+            <NewsletterSignup />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
           {/* Brand */}
           <div className="md:col-span-1">
@@ -70,6 +75,7 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+        </div>
         </div>
 
         <div className="border-t border-white/5 max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-white/20">

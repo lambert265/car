@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, AlertCircle, CheckCircle, Mail } from "lucide-react";
+import { ArrowRight, AlertCircle, CheckCircle, Mail, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function ForgotPasswordPage() {
@@ -38,10 +38,12 @@ export default function ForgotPasswordPage() {
         </Link>
 
         <div className="bg-[#0a0a0a] border border-white/[0.06] p-8">
-          <div className="mb-8">
-            <div className="h-px w-8 bg-[#C9A84C] mb-4" />
-            <h1 className="text-white font-bold text-2xl mb-1">Reset Password</h1>
-            <p className="text-white/30 text-[13px]">
+          <div className="mb-10">
+            <Link href="/sign-in" className="inline-flex items-center gap-2 text-white/40 hover:text-[#C9A84C] transition-colors text-[12px] mb-6">
+              <ArrowLeft size={14} /> Back to sign in
+            </Link>
+            <h1 className="text-white font-bold text-3xl mb-2">Reset password</h1>
+            <p className="text-white/40 text-[14px]">
               Enter your email and we'll send you a reset link
             </p>
           </div>
@@ -68,10 +70,10 @@ export default function ForgotPasswordPage() {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">
-                    Email Address
+                  <label className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/50 mb-3">
+                    <Mail size={12} /> Email Address
                   </label>
                   <input
                     required
@@ -79,14 +81,14 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 focus:outline-none focus:border-[#C9A84C]/50 transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.1] text-white/90 placeholder:text-white/20 text-[14px] px-4 py-4 focus:outline-none focus:border-[#C9A84C]/60 focus:bg-white/[0.05] transition-all"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-gold w-full py-4 text-[11px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                  className="btn-gold w-full py-4 text-[11px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-8"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">
@@ -102,8 +104,8 @@ export default function ForgotPasswordPage() {
                 </button>
               </form>
 
-              <div className="mt-8 pt-8 border-t border-white/[0.06]">
-                <p className="text-white/20 text-[12px] text-center">
+              <div className="mt-8 text-center">
+                <p className="text-white/30 text-[13px]">
                   Remember your password?{" "}
                   <Link href="/sign-in" className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold">
                     Sign in

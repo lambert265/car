@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle, Mail } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle, Mail, User as UserIcon, Lock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function SignUpPage() {
@@ -112,13 +112,10 @@ export default function SignUpPage() {
             <span className="text-[#C9A84C] text-[8px] tracking-[0.6em] uppercase font-bold">Motors</span>
           </Link>
 
-          <div className="mb-8">
-            <div className="h-px w-8 bg-[#C9A84C] mb-4" />
-            <h1 className="text-white font-bold text-2xl mb-1">
-              {step === "form" ? "Create account" : step === "code" ? "Verify your email" : "Account created!"}
-            </h1>
-            <p className="text-white/30 text-[13px]">
-              {step === "form" ? "Set up your LUXE account" : step === "code" ? "Enter the code sent to your email" : "You're all set"}
+          <div className="mb-10">
+            <h1 className="text-white font-bold text-3xl mb-2">Join LUXE</h1>
+            <p className="text-white/40 text-[14px]">
+              {step === "form" ? "Create an account to manage your orders and bookings" : step === "code" ? "We've sent a verification code to your email" : "Welcome to LUXE Motors"}
             </p>
           </div>
 
@@ -229,41 +226,50 @@ export default function SignUpPage() {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Full Name</label>
+                  <label className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/50 mb-3">
+                    <UserIcon size={12} /> Full Name
+                  </label>
                   <input required type="text" value={name} onChange={(e) => setName(e.target.value)}
                     placeholder="Your full name"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 focus:outline-none focus:border-[#C9A84C]/50 transition-colors" />
+                    className="w-full bg-white/[0.03] border border-white/[0.1] text-white/90 placeholder:text-white/20 text-[14px] px-4 py-4 focus:outline-none focus:border-[#C9A84C]/60 focus:bg-white/[0.05] transition-all" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Email Address</label>
+                  <label className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/50 mb-3">
+                    <Mail size={12} /> Email Address
+                  </label>
                   <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 focus:outline-none focus:border-[#C9A84C]/50 transition-colors" />
+                    className="w-full bg-white/[0.03] border border-white/[0.1] text-white/90 placeholder:text-white/20 text-[14px] px-4 py-4 focus:outline-none focus:border-[#C9A84C]/60 focus:bg-white/[0.05] transition-all" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Password</label>
+                  <label className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/50 mb-3">
+                    <Lock size={12} /> Password
+                  </label>
                   <div className="relative">
                     <input required type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Create a strong password"
-                      className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 pr-12 focus:outline-none focus:border-[#C9A84C]/50 transition-colors" />
+                      placeholder="Min. 8 characters"
+                      className="w-full bg-white/[0.03] border border-white/[0.1] text-white/90 placeholder:text-white/20 text-[14px] px-4 py-4 pr-12 focus:outline-none focus:border-[#C9A84C]/60 focus:bg-white/[0.05] transition-all" />
                     <button type="button" onClick={() => setShow(!show)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/60 transition-colors">
-                      {show ? <EyeOff size={15} /> : <Eye size={15} />}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors">
+                      {show ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
                   {password && (
-                    <div className="mt-3 space-y-2">
+                    <div className="mt-4 p-4 bg-white/[0.02] border border-white/[0.06] space-y-2">
+                      <p className="text-[10px] uppercase tracking-wider text-white/30 mb-3">Password Requirements</p>
                       {passwordRequirements.map((req, i) => {
                         const met = req.test(password);
                         return (
-                          <div key={i} className="flex items-center gap-2">
-                            <div className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                              met ? "bg-emerald-400" : "bg-white/10"
-                            }`} />
-                            <span className={`text-[11px] transition-colors ${
-                              met ? "text-emerald-400" : "text-white/20"
+                          <div key={i} className="flex items-center gap-2.5">
+                            <div className={`w-4 h-4 rounded-full flex items-center justify-center transition-all ${
+                              met ? "bg-emerald-500/20 border border-emerald-500/40" : "bg-white/[0.03] border border-white/[0.08]"
+                            }`}>
+                              {met && <CheckCircle size={10} className="text-emerald-400" />}
+                            </div>
+                            <span className={`text-[12px] transition-colors ${
+                              met ? "text-emerald-400" : "text-white/30"
                             }`}>
                               {req.label}
                             </span>
@@ -274,14 +280,27 @@ export default function SignUpPage() {
                   )}
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">Confirm Password</label>
-                  <input required type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)}
-                    placeholder="Repeat password"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white/80 placeholder:text-white/15 text-[13px] px-4 py-3.5 focus:outline-none focus:border-[#C9A84C]/50 transition-colors" />
+                  <label className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/50 mb-3">
+                    <Lock size={12} /> Confirm Password
+                  </label>
+                  <div className="relative">
+                    <input required type={show ? "text" : "password"} value={confirm} onChange={(e) => setConfirm(e.target.value)}
+                      placeholder="Repeat password"
+                      className="w-full bg-white/[0.03] border border-white/[0.1] text-white/90 placeholder:text-white/20 text-[14px] px-4 py-4 pr-12 focus:outline-none focus:border-[#C9A84C]/60 focus:bg-white/[0.05] transition-all" />
+                    <button type="button" onClick={() => setShow(!show)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors">
+                      {show ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                  {confirm && password !== confirm && (
+                    <p className="text-red-400 text-[12px] mt-2 flex items-center gap-2">
+                      <AlertCircle size={13} /> Passwords do not match
+                    </p>
+                  )}
                 </div>
 
                 <button type="submit" disabled={loading}
-                  className="btn-gold w-full py-4 text-[11px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2">
+                  className="btn-gold w-full py-4 text-[11px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-8">
                   {loading ? (
                     <span className="flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
@@ -293,8 +312,8 @@ export default function SignUpPage() {
                 </button>
               </form>
 
-              <div className="mt-8 pt-8 border-t border-white/[0.06]">
-                <p className="text-white/20 text-[12px] text-center">
+              <div className="mt-8 text-center">
+                <p className="text-white/30 text-[13px]">
                   Already have an account?{" "}
                   <Link href="/sign-in" className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold">
                     Sign in
@@ -306,11 +325,11 @@ export default function SignUpPage() {
         </div>
       </div>
 
-      {/* ── LEFT: Rolls-Royce Image ── */}
+      {/* ── LEFT: Mercedes-AMG Image ── */}
       <div className="hidden lg:block flex-1 relative overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=1400&q=90&auto=format&fit=crop"
-          alt="Rolls-Royce Ghost"
+          src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1400&q=90&auto=format&fit=crop"
+          alt="Mercedes-AMG GT"
           fill priority sizes="55vw"
           className="object-cover object-center"
         />
@@ -318,13 +337,13 @@ export default function SignUpPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/80 via-transparent to-transparent" />
 
         <div className="absolute bottom-12 right-12 text-right">
-          <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C9A84C]/70 mb-2">Featured</p>
-          <p className="text-white font-bold text-2xl tracking-wide">Rolls-Royce Ghost</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C9A84C]/70 mb-2">Performance</p>
+          <p className="text-white font-bold text-2xl tracking-wide">Mercedes-AMG GT</p>
           <div className="h-px w-16 bg-gradient-to-l from-[#C9A84C] to-transparent mt-3 ml-auto" />
         </div>
 
         <div className="absolute top-12 left-12 flex flex-col gap-4">
-          {[["563", "Horsepower"], ["4.6s", "0–60 mph"], ["V12", "Engine"]].map(([val, lbl]) => (
+          {[["577", "Horsepower"], ["3.5s", "0–60 mph"], ["AMG", "V8 Biturbo"]].map(([val, lbl]) => (
             <div key={lbl}>
               <p className="text-[#C9A84C] font-bold text-xl leading-none" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>{val}</p>
               <p className="text-white/30 text-[9px] uppercase tracking-[0.2em] mt-0.5">{lbl}</p>

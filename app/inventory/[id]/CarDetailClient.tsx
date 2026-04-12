@@ -9,6 +9,9 @@ import {
 import type { Car } from "@/lib/types";
 import CarCard from "@/components/CarCard";
 import { useCart } from "@/lib/cart";
+import ReviewForm from "@/components/reviews/ReviewForm";
+import ReviewList from "@/components/reviews/ReviewList";
+import ShareButtons from "@/components/ShareButtons";
 
 function Lightbox({ images, index, onClose }: { images: string[]; index: number; onClose: () => void }) {
   const [current, setCurrent] = useState(index);
@@ -239,15 +242,21 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
 
             {/* CTAs */}
             <div className="flex flex-col gap-3 mb-3">
+              <Link
+                href={`/book-test-drive?carId=${car.id}`}
+                className="btn-gold w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em]"
+              >
+                <Calendar size={14} /> Book Test Drive
+              </Link>
               <button
                 onClick={() => document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth" })}
-                className="btn-gold w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em]"
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full border border-[#C9A84C]/30 text-[#C9A84C] text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-[#C9A84C]/5 hover:border-[#C9A84C]/50 transition-colors"
               >
                 Request Viewing
               </button>
               <AddToCartButton car={car} />
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 mb-3">
               <a
                 href={`https://wa.me/15551234567?text=Hi, I'm interested in the ${encodeURIComponent(car.year + " " + car.name)}`}
                 target="_blank" rel="noopener noreferrer"
@@ -262,6 +271,7 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
                 <Phone size={14} /> Call
               </a>
             </div>
+            <ShareButtons url={`/inventory/${car.id}`} title={`${car.year} ${car.name}`} description={car.description} />
           </div>
         </div>
 
@@ -316,6 +326,22 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
               </button>
             </form>
           )}
+        </div>
+
+        {/* ── REVIEWS ── */}
+        <div className="mb-16">
+          <div className="mb-8">
+            <div className="h-px w-8 bg-[#C9A84C] mb-3" />
+            <h2 className="text-white font-bold text-2xl">Customer Reviews</h2>
+          </div>
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <ReviewList reviews={[]} />
+            </div>
+            <div>
+              <ReviewForm carId={car.id} />
+            </div>
+          </div>
         </div>
 
         {/* ── SIMILAR VEHICLES ── */}
