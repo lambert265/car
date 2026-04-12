@@ -30,19 +30,11 @@ export default function SignInPage() {
       return; 
     }
 
-    // Check if user is admin
-    if (data.user) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', data.user.id)
-        .single();
-
-      if (profile?.role === 'admin' || data.user.email === ADMIN_EMAIL) {
-        router.push("/admin/dashboard");
-      } else {
-        router.push("/account");
-      }
+    // Check if user is admin by email
+    if (data.user && data.user.email === ADMIN_EMAIL) {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/account");
     }
   }
 
