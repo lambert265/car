@@ -41,7 +41,7 @@ function DarkSlider({ min, max, step, value, onChange, leftLabel, rightLabel }: 
 
 export default function FinanceClient() {
   const [vehiclePrice, setVehiclePrice] = useState(115000);
-  const [downPayment,  setDownPayment]  = useState(20000);
+  const [downPayment,  setDownPayment]  = useState(69000); // 60% of default price
   const [term,         setTerm]         = useState(60);
   const [credit,       setCredit]       = useState<keyof typeof RATES>("excellent");
   const [tradeIn,      setTradeIn]      = useState(0);

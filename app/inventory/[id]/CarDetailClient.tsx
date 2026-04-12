@@ -49,8 +49,10 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
   const [lightbox,  setLightbox]  = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  const downPaymentPercent = 0.60; // 60% down payment
+  const loanAmount = car.price * (1 - downPaymentPercent);
   const monthly = Math.round(
-    (car.price * 0.8 * (3.9 / 100 / 12) * Math.pow(1 + 3.9 / 100 / 12, 60)) /
+    (loanAmount * (3.9 / 100 / 12) * Math.pow(1 + 3.9 / 100 / 12, 60)) /
     (Math.pow(1 + 3.9 / 100 / 12, 60) - 1)
   );
 
@@ -228,7 +230,7 @@ export default function CarDetailClient({ car, similar }: { car: Car; similar: C
                 <p className="font-bold text-white text-lg">
                   ${monthly.toLocaleString()}<span className="text-[13px] font-normal text-white/30">/mo</span>
                 </p>
-                <p className="text-[10px] text-white/20">20% down · 60 months · 3.9% APR</p>
+                <p className="text-[10px] text-white/20">60% down · 60 months · 3.9% APR</p>
               </div>
               <Link href="/finance" className="shrink-0 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A84C] hover:text-[#E8C97A] transition-colors flex items-center gap-1.5">
                 Calculate <ArrowRight size={11} />
